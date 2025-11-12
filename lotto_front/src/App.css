@@ -1,0 +1,59 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0; /* 기본 패딩 제거 */
+}
+
+.card {
+  padding: 2em;
+}
+
+.lotto-ball-default {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  margin: 6px;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.12),
+    inset 0 -3px 6px rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  user-select: none;
+}
+
+/* 색상 구간 (간단한 클래스명) */
+.lotto-ball-1 {
+  background: #f6c94b;
+  color: #111;
+} /* 1-10 */
+.lotto-ball-2 {
+  background: #4aa0ff;
+  color: #fff;
+} /* 11-20 */
+.lotto-ball-3 {
+  background: #ff6b6b;
+  color: #fff;
+} /* 21-30 */
+.lotto-ball-4 {
+  background: #bdbdbd;
+  color: #111;
+} /* 31-40 */
+.lotto-ball-5 {
+  background: #58d68d;
+  color: #fff;
+} /* 41-45 */
+
+.historyView {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}

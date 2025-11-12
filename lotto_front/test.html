@@ -1,0 +1,89 @@
+<!-- HTML + CSS + JS (한 파일 예시) -->
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>로또 공 예시</title>
+<style>
+/* 공 기본 스타일 */
+.lotto-ball {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  margin: 6px;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.12), inset 0 -3px 6px rgba(255,255,255,0.08);
+  border: 2px solid rgba(0,0,0,0.08);
+  user-select: none;
+}
+
+/* 색상 구간 (간단한 클래스명) */
+.yellow { background: #f6c94b; color: #111; } /* 1-10 */
+.blue   { background: #4aa0ff; color: #fff; } /* 11-20 */
+.red    { background: #ff6b6b; color: #fff; } /* 21-30 */
+.gray   { background: #bdbdbd; color: #111; } /* 31-40 */
+.green  { background: #58d68d; color: #fff; } /* 41-45 */
+
+/* 옵션: 반응형/작게 보일 때 */
+.lotto-wrap { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; }
+.small .lotto-ball { width: 40px; height: 40px; font-size: 14px; margin:4px; }
+</style>
+</head>
+<body>
+
+<div class="lotto-wrap" id="lotto"></div>
+
+<script>
+/*
+ enum-like 범위 정의 (key -> 구간, 그리고 적용할 class 이름)
+ 필요하면 이걸 서버/프론트에서 재사용하면 깔끔함.
+*/
+const LottoRange = {
+  YELLOW: { min: 1,  max: 10, cls: 'yellow' },
+  BLUE:   { min: 11, max: 20, cls: 'blue'   },
+  RED:    { min: 21, max: 30, cls: 'red'    },
+  GRAY:   { min: 31, max: 40, cls: 'gray'   },
+  GREEN:  { min: 41, max: 45, cls: 'green'  }
+};
+
+/* 숫자에 맞는 class 반환 함수 */
+function getLottoClass(num) {
+  for (const key in LottoRange) {
+    const r = LottoRange[key];
+    if (num >= r.min && num <= r.max) return r.cls;
+  }
+  return ''; // 범위를 벗어나면 빈칸
+}
+
+/* 예시: 직접 바꿀 수 있는 숫자 배열 */
+const sample = [3, 11, 25, 33, 41, 7]; // 예: 당첨번호(6개) + 보너스 등 자유롭게 바꿔보기
+
+const container = document.getElementById('lotto');
+sample.forEach(n => {
+  const d = document.createElement('div');
+  d.className = 'lotto-ball ' + getLottoClass(n);
+  d.textContent = n;
+  container.appendChild(d);
+});
+
+/* 더 많은 숫자를 한 번에 (1~45 샘플 그리기) */
+// Uncomment 아래 줄을 사용하면 1~45 전부 표시됨
+// drawAllNumbers();
+
+/* 함수로 전체 그리기(테스트용) */
+function drawAllNumbers() {
+  container.innerHTML = '';
+  for (let i = 1; i <= 45; i++) {
+    const d = document.createElement('div');
+    d.className = 'lotto-ball ' + getLottoClass(i);
+    d.textContent = i;
+    container.appendChild(d);
+  }
+}
+</script>
+</body>
+</html>
