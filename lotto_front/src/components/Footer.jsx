@@ -3,7 +3,7 @@ import LottoCircle from "./LottoCricle";
 export default function Footer({history}) {    
     const historyView = history.map((e,i)=>{
         return (
-            <div className="historyItem">
+            <div className="history-item">
                 <span>No.{i}</span>
                 <LottoCircle lottoList={e}/>            
             </div>
@@ -11,7 +11,7 @@ export default function Footer({history}) {
     });
 
     return (        
-        <div className="historyView">
+        <div className="history-view">
             {historyView}
         </div>
     )

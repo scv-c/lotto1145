@@ -52,8 +52,15 @@ ul {
   color: #fff;
 } /* 41-45 */
 
-.historyView {
+.history-view {
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+
+.menu-view-true {
+  display:block;
+}
+.menu-view-false {
+  display:none;
 }

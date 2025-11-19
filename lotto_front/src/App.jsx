@@ -1,12 +1,10 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
-import Button from "./components/button";
 import Dashboard from "./components/Dashboard";
 import { v4 as uuidv4 } from "uuid";
-import Top from "./components/Top";
+import Header from "./components/Header";
 import Footer from "./components/Footer";
+import LottoButton from "./components/LottoButton";
 
 function App() {
   const [history, setHistory] = useState([]); // 이전 결과들 누적
@@ -38,9 +36,9 @@ function App() {
 
   return (
     <>
-      <Top />
+      <Header />
       <Dashboard lottoList={lotto} />
-      <Button onClick={LottoHandle} />
+      <LottoButton onClick={LottoHandle} />
       <Footer history={history}/>
     </>
   );
