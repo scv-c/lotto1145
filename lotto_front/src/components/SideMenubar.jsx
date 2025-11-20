@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Ranking from "./modals/Ranking";
+import menuIcon from "./../assets/menu.png";
 
 export default function SideMenubar({ menuList = [{}] }) {
   const [toggleMenubar, setToggleMenubar] = useState(false);
@@ -30,9 +31,17 @@ export default function SideMenubar({ menuList = [{}] }) {
   });
 
   return (
-    <div>
+    <div className="menu">
+      {/* 배경 오버레이 - 클릭하면 메뉴 닫힘 */}
+      {toggleMenubar && (
+        <div 
+          className="menu-overlay"
+          onClick={() => setToggleMenubar(false)}
+        />
+      )}
+
       <div className={`menu-view menu-view-${toggleMenubar}`}>{menuView}</div>
-      <button onClick={onChangeToggleMenubar}> sideMenu </button>
+      <button onClick={onChangeToggleMenubar} className="menu-btn"><img src={menuIcon} className="menu-icon"/> </button>
       
       {/* Ranking 컴포넌트가 자체적으로 Modal을 포함 */}
       {showRanking && <Ranking onClose={() => setShowRanking(false)} />}

@@ -58,9 +58,110 @@ ul {
   flex-direction: column;
 }
 
-.menu-view-true {
-  display:block;
+.menu {
+  display: flex;
+  justify-content: flex-end;
 }
+
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0);
+  z-index: 98; /* menu-view보다 낮게 */
+}
+
+.menu-view-true {
+  display: block;
+  position: absolute;
+  z-index: 99;
+  transform: translate(-30px);
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  min-width: 120px;
+  width: 120px;
+}
+
 .menu-view-false {
-  display:none;
+  display: none;
+}
+
+.menu-item {
+  margin: 8px;
+  font-weight: bold;
+}
+
+.menu-item:hover {
+  background-color: #fff8ff;
+  transform: scale(1.1);
+}
+
+/* HISTORY 전체 영역 */
+.history-view {
+  width: 720px;
+  max-height: 380px; /* 스크롤 높이 */
+  overflow-y: auto; /* 스크롤 가능 */
+  margin-top: 20px;
+  padding-right: 8px; /* 스크롤바 공간 */
+  cursor: grab;
+}
+.history-view:active {
+  cursor: grabbing;
+}
+
+/* 각 ITEM */
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  padding: 10px 16px;
+  margin-bottom: 14px;
+
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px dashed #bcd1ff;
+
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+  /* 이전 사례처럼 너무 커지는 것을 제거 */
+  height: 64px;
+}
+
+/* 왼쪽에 표시될 회차 번호 */
+.history-item .history-label {
+  min-width: 50px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #3454d1;
+  text-align: left;
+}
+
+/* 번호 리스트 */
+.history-item ul {
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+/* 리스트 기본 스타일 제거 */
+.history-item ul li {
+  list-style: none;
+}
+
+.menu-btn {
+  border: none;
+  background: none;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.menu-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
