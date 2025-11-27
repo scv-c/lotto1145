@@ -9,6 +9,10 @@ export const UserLotto = new EntitySchema({
       primary: true,
       generated: true
     },
+    Seq: {
+      type: 'varchar',
+      nullable: false
+    },
     UUID: {
       type: 'varchar',
       nullable: false

@@ -8,16 +8,16 @@ export class UserLottoController {
   }
 
   createUserLotto = asyncHandler(async (req, res) => {
-    const { uuid, numbers } = req.body;
-    const userLotto = await this.userLottoService.createUserLotto(uuid, numbers);
+    const { H_U_I_1 } = req.cookies;
+    const userLotto = await this.userLottoService.createNewLotto(H_U_I_1);
     res.status(201).json(
       ResponseUtil.success(userLotto, 'User lotto created successfully', 201)
     );
   });
 
   getUserLottosByUUID = asyncHandler(async (req, res) => {
-    const { uuid } = req.params;
-    const lottos = await this.userLottoService.getUserLottosByUUID(uuid);
+    const { H_U_I_1 } = req.cookies;
+    const lottos = await this.userLottoService.getUserLottosByUUID(H_U_I_1);
     res.status(200).json(
       ResponseUtil.success(lottos, 'User lottos retrieved successfully')
     );
@@ -29,4 +29,5 @@ export class UserLottoController {
       ResponseUtil.success(lottos, 'All user lottos retrieved successfully')
     );
   });
+
 }

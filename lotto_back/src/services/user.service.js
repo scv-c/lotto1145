@@ -16,9 +16,8 @@ export class UserService {
     return this.repository;
   }
 
-  async createUser() {
+  async createUser(uuid) {
     const repo = this.getRepository();
-    const uuid = randomUUID();
 
     const existingUser = await repo.findOne({ where: { UUID: uuid } });
     if (existingUser) {
@@ -40,6 +39,7 @@ export class UserService {
     return user;
   }
 
+  //getAllUsers(), deleteUser(uuid) 는 안 쓰는것을 권장.
   async getAllUsers() {
     const repo = this.getRepository();
     return await repo.find();

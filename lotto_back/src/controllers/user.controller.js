@@ -15,8 +15,8 @@ export class UserController {
   });
 
   getUserByUUID = asyncHandler(async (req, res) => {
-    const { uuid } = req.params;
-    const user = await this.userService.getUserByUUID(uuid);
+    const { H_U_I_1 } = req.cookies;
+    const user = await this.userService.getUserByUUID(H_U_I_1);
     res.status(200).json(
       ResponseUtil.success(user, 'User retrieved successfully')
     );
