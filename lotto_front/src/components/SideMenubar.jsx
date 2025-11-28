@@ -12,7 +12,7 @@ export default function SideMenubar({ menuList = [{}] }) {
 
   const handleMenuClick = (type) => {
     setToggleMenubar(false); // 메뉴바 닫기
-    
+
     if (type === "ranking") {
       setShowRanking(true); // Ranking 컴포넌트 표시
     }
@@ -20,8 +20,8 @@ export default function SideMenubar({ menuList = [{}] }) {
 
   const menuView = menuList.map((e, index) => {
     return (
-      <div 
-        key={index} 
+      <div
+        key={index}
         className="menu-item"
         onClick={() => handleMenuClick(e.type)}
       >
@@ -34,15 +34,14 @@ export default function SideMenubar({ menuList = [{}] }) {
     <div className="menu">
       {/* 배경 오버레이 - 클릭하면 메뉴 닫힘 */}
       {toggleMenubar && (
-        <div 
-          className="menu-overlay"
-          onClick={() => setToggleMenubar(false)}
-        />
+        <div className="menu-overlay" onClick={() => setToggleMenubar(false)} />
       )}
 
       <div className={`menu-view menu-view-${toggleMenubar}`}>{menuView}</div>
-      <button onClick={onChangeToggleMenubar} className="menu-btn"><img src={menuIcon} className="menu-icon"/> </button>
-      
+      <button onClick={onChangeToggleMenubar} className="menu-btn">
+        <img src={menuIcon} className="menu-icon" />{" "}
+      </button>
+
       {/* Ranking 컴포넌트가 자체적으로 Modal을 포함 */}
       {showRanking && <Ranking onClose={() => setShowRanking(false)} />}
     </div>

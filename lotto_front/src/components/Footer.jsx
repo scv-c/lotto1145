@@ -1,9 +1,13 @@
 import { useEffect, useRef } from "react";
 import LottoCircle from "./LottoCricle";
+import { useSelector } from "react-redux";
 
-export default function Footer({ history }) {
+export default function Footer() {
+  const historyLottoList = useSelector((state) => state.lotto.historyLottoList);
   const scrollRef = useRef(null);
-
+  /**
+   * History View 마우스드래그 이벤트 추가 useEffect
+   */
   useEffect(() => {
     const el = scrollRef.current;
     let isDown = false;
@@ -48,11 +52,12 @@ export default function Footer({ history }) {
     };
   }, []);
 
-  const historyView = history.map((e, i) => {
+  const historyView = historyLottoList.map((e, i) => {
+    const { No, Seq, UUID, ...lottoList } = e;
     return (
-      <div className="history-item">
-        <span>No.{i}</span>
-        <LottoCircle lottoList={e} />
+      <div className="history-item" key={No}>
+        <span>{Seq}</span>
+        <LottoCircle lottoList={lottoList} />
       </div>
     );
   });

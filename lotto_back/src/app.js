@@ -5,7 +5,7 @@ import userLottoRoutes from './routes/userLotto.routes.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { ResponseUtil } from './utils/response.util.js';
 import cookieParser from 'cookie-parser';
-import { checkUUID } from './middleware/cookieChecker.js';
+import cors from 'cors';
 
 const app = express();
 
@@ -13,6 +13,10 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
 
 
 // 라우트
@@ -24,11 +28,9 @@ app.get('/', (req, res) => {
 });
 
 
-app.use('/api/daily-lotto', dailyLottoRoutes);
-
-app.use(checkUUID);
 app.use('/api/users', userRoutes);
 app.use('/api/user-lotto', userLottoRoutes);
+app.use('/api/daily-lotto', dailyLottoRoutes);
 
 // 404 핸들러
 app.use((req, res) => {

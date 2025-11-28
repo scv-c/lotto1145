@@ -58,6 +58,7 @@ export class UserLottoService {
     await this.userService.getUserByUUID(uuid);
 
     const repo = this.getRepository();
+    
     return await repo.find({
       where: { UUID: uuid },
       order: { No: "DESC" },

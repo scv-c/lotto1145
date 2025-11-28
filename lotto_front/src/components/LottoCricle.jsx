@@ -1,17 +1,20 @@
 export default function LottoCircle({ lottoList }) {
-  console.log(`Lotto번호추출되었슈`);
-  const lottoDomList = lottoList.map((e) => {
-    let curColorNum = Math.floor(e.number / 10);
-    if (e.number % 10 != 0) {
+  const lottoDomList = [];
+
+  for (const [key, value] of Object.entries(lottoList)) {
+    const numValue = Number(value);
+
+    let curColorNum = Math.floor(numValue / 10);
+    if (numValue % 10 != 0) {
       curColorNum += 1;
     }
 
-    return (
-      <li className={`lotto-ball-default lotto-ball-${curColorNum}`} key={e.id}>
-        {e.number}
+    lottoDomList.push(
+      <li className={`lotto-ball-default lotto-ball-${curColorNum}`} key={key}>
+        {numValue}
       </li>
     );
-  });
-
+  }
+  
   return <ul>{lottoDomList}</ul>;
 }

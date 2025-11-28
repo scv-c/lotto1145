@@ -1,45 +1,46 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import Dashboard from "./components/Dashboard";
-import { v4 as uuidv4 } from "uuid";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import LottoButton from "./components/LottoButton";
+import { useDispatch } from "react-redux";
+import { setUUID } from "./services/store/uuidSlice";
+import { setHistoryLottoList } from "./services/store/lottoSlice.js";
+import { loadUser } from "./services/storage/userStorage.js";
+import { initUser } from "./services/api/user.js";
+import { getUserLottoList } from "./services/api/lotto.js";
 
 function App() {
   const [history, setHistory] = useState([]); // 이전 결과들 누적
-
   const [lotto, setLotto] = useState([]);
-  const LottoHandle = () => {
-    const l = new Set();
-    const lottoList = [];
+  const initRef = useRef(false);
+  const dispatch = useDispatch();
 
-    //로또 번호 생성 (중복제거)
-    while (l.size < 7) {
-      const newNumber = 1 + Math.floor(Math.random() * 44);
-      if (l.has(newNumber)) continue;
-
-      l.add(newNumber);
-    }
-
-    //로또 id값 생성(react list key에러 대응)
-    l.forEach((v) => {
-      lottoList.push({
-        id: uuidv4(),
-        number: v,
+  useEffect(() => {
+    if (initRef.current) return;
+    console.log("진행~");
+    initRef.current = true;
+    const myUUID = loadUser();
+    const result = initUser(myUUID)
+      .then((res) => {
+        dispatch(setUUID(myUUID));
+        console.log("zz");
+      })
+      .then(getUserLottoList)
+      .then((res) => {
+        const myHistoryLottoList = res.data;
+        dispatch(setHistoryLottoList(myHistoryLottoList));
+        initRef.current=false;
       });
-    });
-    
-    setLotto(lottoList);
-    setHistory([lottoList,...history]);
-  };
+  }, []);
 
   return (
     <>
       <Header />
-      <Dashboard lottoList={lotto} />
-      <LottoButton onClick={LottoHandle} />
-      <Footer history={history}/>
+      <Dashboard />
+      <LottoButton />
+      <Footer />
     </>
   );
 }

@@ -21,6 +21,33 @@ export const checkCookie = (cookieName, errorMessage) => {
 };
 
 /**
+ * Body내에 있는 Cookie값을 셋팅함.
+ * @param {string} bodyName - 바디에 있는 데이터
+ * @param {Object} options - 쿠키옵션 (선택)
+ */
+export const setCookieFromBody = (bodyName, options={}) => {
+  return (req, res, next) => {
+    const bodyValue = req.body?.[bodyName];
+    const cookieValue = req.cookies?.[bodyName];
+
+    if (!cookieValue) {
+      if(!bodyValue) {
+        throw new AppError("쿠키에 추가할 body값이 없습니다.", 400);
+      }
+      
+      console.log(`Cookie값 추가 | ${bodyName} | ${bodyValue}`);
+      res.cookie(bodyName, bodyValue, {
+        httpOnly: true
+      });
+      
+    }
+    
+    next();
+  };
+};
+
+/**
  * 사용자 UUID 쿠키 필수 검증
  */
 export const checkUUID = checkCookie('H_U_I_1', 'specific cookie value is required.');
+export const setCookieFromBodyUUID = setCookieFromBody('H_U_I_1',{});
