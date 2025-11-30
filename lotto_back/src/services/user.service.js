@@ -1,7 +1,6 @@
-import { dbConnector } from '../config/dbConnector.js';
-import { User } from '../entities/User.entity.js';
-import { NotFoundError, ConflictError } from '../utils/error.util.js';
-import { randomUUID } from 'crypto';
+import { dbConnector } from "../config/dbConnector.js";
+import { User } from "../entities/User.entity.js";
+import { NotFoundError, ConflictError } from "../utils/error.util.js";
 
 export class UserService {
   constructor() {
@@ -21,7 +20,7 @@ export class UserService {
 
     const existingUser = await repo.findOne({ where: { UUID: uuid } });
     if (existingUser) {
-      throw new ConflictError('User already exists');
+      throw new ConflictError("User already exists");
     }
 
     const user = repo.create({ UUID: uuid });
@@ -31,12 +30,61 @@ export class UserService {
   async getUserByUUID(uuid) {
     const repo = this.getRepository();
     const user = await repo.findOne({ where: { UUID: uuid } });
-    
+
     if (!user) {
-      throw new NotFoundError('User not found');
+      throw new NotFoundError("User not found");
     }
-    
+
     return user;
+  }
+
+  /**
+   * 복수개의 UUID 기준 User 조회
+   * @param {string[]} uuids
+   * @returns object[]
+   */
+  async getUsersByMultiUUID(uuids) {
+    if (!Array.isArray(uuids) || uuids.length === 0) return [];
+
+    const repo = this.getRepository();
+    const users = await repo
+      .createQueryBuilder()
+      .where(`UUID IN (:...uuids)`, { uuids })
+      .getMany();
+
+    if (users.length == 0) {
+      throw new NotFoundError("User not found");
+    }
+
+    return users;
+  }
+
+  /**
+   * UUID기준 유저별 MaxScore값을 업데이트 한다.
+   * @param {object[]} updateLottoLists 업데이트할 목록
+   * @returns 
+   */
+  async updateUsersMaxScore(updateLottoLists) {
+    if (updateLottoLists.length == 0) return;
+
+    const repo = this.getRepository();
+    const cases = [];
+    const uuids = [];
+
+    for (let updateLottoList of updateLottoLists) {
+      const { No, Seq, UUID, AnsCount, ...lottoList } = updateLottoList;
+      cases.push(`WHEN UUID = '${UUID}' THEN ${AnsCount}`);
+      uuids.push(UUID);
+    }
+
+    return await repo
+      .createQueryBuilder()
+      .update()
+      .set({
+        MaxScore: () => `CASE ${cases.join(" ")} END`,
+      })
+      .where(`UUID IN (:...uuids)`, { uuids })
+      .execute();
   }
 
   //getAllUsers(), deleteUser(uuid) 는 안 쓰는것을 권장.

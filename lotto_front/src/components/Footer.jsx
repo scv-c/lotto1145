@@ -53,7 +53,7 @@ export default function Footer() {
   }, []);
 
   const historyView = historyLottoList.map((e, i) => {
-    const { No, Seq, UUID, ...lottoList } = e;
+    const { No, Seq, UUID, AnsCount, ...lottoList } = e;
     return (
       <div className="history-item" key={No}>
         <span>{Seq}</span>

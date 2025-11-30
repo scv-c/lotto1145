@@ -8,8 +8,8 @@ export class DailyLottoController {
   }
 
   createDailyLotto = asyncHandler(async (req, res) => {
-    const { seq, numbers } = req.body;
-    const lotto = await this.dailyLottoService.createDailyLotto(seq, numbers);
+    const { seq } = req.body;
+    const lotto = await this.dailyLottoService.createDailyLotto(seq);
     res.status(201).json(
       ResponseUtil.success(lotto, 'Daily lotto created successfully', 201)
     );

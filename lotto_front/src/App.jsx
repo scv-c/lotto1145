@@ -10,6 +10,7 @@ import { setHistoryLottoList } from "./services/store/lottoSlice.js";
 import { loadUser } from "./services/storage/userStorage.js";
 import { initUser } from "./services/api/user.js";
 import { getUserLottoList } from "./services/api/lotto.js";
+import socket from "./services/api/socket.js";
 
 function App() {
   const [history, setHistory] = useState([]); // 이전 결과들 누적
@@ -35,6 +36,11 @@ function App() {
       });
   }, []);
 
+  useEffect(()=>{
+    socket.on('welcome', data => {
+      console.log("연결함. ", data);
+    })
+  },[]);
   return (
     <>
       <Header />

@@ -15,6 +15,7 @@ router.post("/init", setCookieFromBodyUUID, (req, res) => {
 
 router.use(checkUUID);
 router.post("/", userController.createUser);
+router.post("/uuids", userController.getUsersByMultiUUID);
 router.get("/:uuid", userController.getUserByUUID);
 router.delete("/:uuid", userController.deleteUser);
 

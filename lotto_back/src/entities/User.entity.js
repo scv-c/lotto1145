@@ -1,18 +1,22 @@
-import { EntitySchema } from 'typeorm';
+import { EntitySchema } from "typeorm";
 
 export const User = new EntitySchema({
-  name: 'User',
-  tableName: 'users',
+  name: "User",
+  tableName: "users",
   columns: {
     No: {
-      type: 'integer',
+      type: "integer",
       primary: true,
-      generated: true
+      generated: true,
     },
     UUID: {
-      type: 'varchar',
+      type: "varchar",
       unique: true,
-      nullable: false
-    }
-  }
+      nullable: false,
+    },
+    MaxScore: {
+      type: "integer",
+      nullable: true,
+    },
+  },
 });

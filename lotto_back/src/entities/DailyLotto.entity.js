@@ -9,10 +9,10 @@ export const DailyLotto = new EntitySchema({
       primary: true,
       generated: true
     },
-    seq: {
+    Seq: {
       type: 'varchar',
       nullable: false,
-      comment: 'HH:mm 형식의 회차 값'
+      comment: 'YYYY-MM-DD HH:mm 형식의 회차 값'
     },
     No1: {
       type: 'integer',

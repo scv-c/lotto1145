@@ -1,6 +1,7 @@
 import { dbConnector } from '../config/dbConnector.js';
 import { DailyLotto } from '../entities/DailyLotto.entity.js';
 import { NotFoundError, ValidationError } from '../utils/error.util.js';
+import { LottoUtil } from '../utils/Lotto.util.js';
 
 export class DailyLottoService {
   constructor() {
@@ -27,12 +28,14 @@ export class DailyLottoService {
     }
   }
 
-  async createDailyLotto(seq, numbers) {
-    this.validateLottoNumbers(numbers);
+  async createDailyLotto() {
+    const numbers = LottoUtil.getNewLottoNumbers();
+    const Seq = LottoUtil.getCurrentSeq();
+    
     
     const repo = this.getRepository();
     const lotto = repo.create({
-      seq,
+      Seq,
       No1: numbers[0],
       No2: numbers[1],
       No3: numbers[2],

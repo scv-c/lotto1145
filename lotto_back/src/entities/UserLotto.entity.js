@@ -44,6 +44,10 @@ export const UserLotto = new EntitySchema({
     No7: {
       type: 'integer',
       nullable: false
+    },
+    AnsCount: {
+      type: 'integer',
+      nullable: true
     }
   },
   relations: {

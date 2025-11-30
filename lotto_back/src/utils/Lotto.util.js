@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 /**
  * @class Lotto게임과 관련된 Util들 입니다.
  */
@@ -22,13 +24,17 @@ export class LottoUtil {
    * @returns {string} YYYY-MM-DD HH:mm 형식의 시간
    */
   static getCurrentSeq() {
-    const now = new Date();
-    const YYYY = now.getFullYear();
-    const MM = now.getMonth() + 1;
-    const DD = now.getDate();
-    const hours = String(now.getHours()).padStart(2, "0");
-    const minutes = String(now.getMinutes()).padStart(2, "0");
-    return `${YYYY}-${MM}-${DD} ${hours}:${minutes}`;
+    const now = dayjs();
+    return now.format("YYYY-MM-DD HH:mm");
+  }
+
+  /**
+   * 현재 시간에서 5분 전 시간 구함.
+   * @returns {string} YYYY-MM-DD HH:mm 형식의 시간
+   */
+  static getBefore5mSeq() {
+    const now = dayjs();
+    return now.subtract(5, "m").format("YYYY-MM-DD HH:mm");
   }
 
   /**
@@ -39,11 +45,69 @@ export class LottoUtil {
    */
   static getAnswerPercentage(ans, nums) {
     let per = 0;
-    
+
     for (let num of nums) {
       if (ans.includes(num)) per += 1;
     }
 
     return per;
+  }
+
+  /**
+   * 유저의 특정 회차 로또정보와 현재 회차(결과)의 로또정보를 받아와 맞춘 횟수를 반환한다.
+   * @param {object} dailyLotto No* 으로만 구성된 dailyLotto Object
+   * @param {object} userLottoList No* 으로만 구성된 userLotto Object
+   * @returns
+   */
+  static getAnsCount(dailyLotto, userLotto) {
+    let count = 0;
+
+    for (let [key, value] of Object.entries(userLotto)) {
+      if (Object.values(dailyLotto).includes(value)) {
+        count++;
+      }
+    }
+
+    return count;
+  }
+
+  /**
+   * 로또 정보들에서 중복을 제거 하며, AnsCount가 가장 높은 로또정보(MaxScore)만 반환
+   * @param {object[]} userLottoLists 
+   * @returns object[]
+   */
+  static getDistinctMaxScoreLottoList(userLottoLists) {
+    const maxScoreList = new Map();
+    for (const userLottoList of userLottoLists) {
+      const { UUID, AnsCount } = userLottoList;
+
+      if (!maxScoreList.get(UUID) || maxScoreList.get(UUID) < AnsCount) {
+        maxScoreList.set(UUID, AnsCount);
+      }
+    }
+
+    return userLottoLists.filter((e) => maxScoreList.get(e.UUID));
+  }
+
+  /**
+   * 업데이트할 내용 중, 현재 맞춘 수보다 작은 것들은 제거.
+   * @param {object[]} userList 
+   * @param {object[]} userLottoLists 
+   * @returns 
+   */
+  static getUserListsNeedUpdateMaxScore(userList, userLottoLists) {
+    const updateList = [];
+
+    for(const userLottoList of userLottoLists) {
+      const {UUID, AnsCount} = userLottoList;
+      const user = userList.find(e=>e.UUID == UUID);
+      
+      if(user.MaxScore < AnsCount) {
+        console.log(`최대점수 비교 ${UUID} | AnsCount : ${AnsCount} | MaxScore : ${user.MaxScore}`);
+        updateList.push(userLottoList);
+      }
+    }
+
+    return updateList;
   }
 }
