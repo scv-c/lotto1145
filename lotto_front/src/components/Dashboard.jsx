@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import LottoCircle from "./LottoCricle";
+import SeqLotto from "./SeqLotto";
 
 export default function Dashboard() {
   console.log("Dashboard렌더링");
@@ -8,7 +9,10 @@ export default function Dashboard() {
   );
 
   return (
-    <div className="dashboard" key={No}>
+    <div className="dashboard">
+      <div>
+        <SeqLotto />
+      </div>
       <LottoCircle lottoList={lottoList} />
     </div>
   );

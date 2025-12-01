@@ -1,12 +1,21 @@
 import { Server } from "socket.io";
+import { AppError } from "./error.util.js";
+import { myEventEmitter } from "./eventEmitter.util.js";
 
-export default class SocketConnector {
-  constructor(httpServer) {
-    this.http = httpServer;
+class SocketConnector {
+  constructor() {
+    this.http = null;
     this.io = null;
+    this.myEventEmitter = myEventEmitter;
   }
 
-  init() {
+  init(httpServer) {
+    if (this.io) {
+      console.log("Socket.io가 이미 초기화 되었습니다.");
+      return;
+    }
+
+    this.http = httpServer;
     this.io = new Server(this.http, {
       origin: "http://localhost:5173",
       methods: ["GET", "POST"],
@@ -19,9 +28,20 @@ export default class SocketConnector {
   setOn() {
     this.io.on("connection", (socket) => {
       console.log("사용자 연결됨 : ", socket.id);
-      this.io.emit("welcome", {
-        message: "hihihi",
-      });
+    });
+
+    this.myEventEmitter.on("ioEmit", ({ event, data }) => {
+      console.log(`데이터 확인 ${event}, ${data}`);
+      this.ioEmit(event, data);
     });
   }
+
+  ioEmit(ev, data) {
+    if (!this.io) {
+      throw new AppError("Socket.io가 아직 초기화되지 않았습니다.");
+    }
+    return this.io.emit(ev, data);
+  }
 }
+
+export default new SocketConnector();

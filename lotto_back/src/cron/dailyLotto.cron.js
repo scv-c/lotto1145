@@ -1,6 +1,6 @@
 import cron from "node-cron";
 import { WorkerflowService } from "../services/workerflow.service.js";
-
+import socketConnector from "../utils/socket.util.js";
 export class DailyLottoCron {
   constructor() {
     console.log(`DailyLottoCron 실행`);
@@ -13,7 +13,7 @@ export class DailyLottoCron {
         `${Date().toString()} 5분간격 자동 업데이트 실행! // 임시 매분, }`
       );
 
-      this.workerflowService.batchCreateDailyLotto();
+      await this.workerflowService.batchCreateDailyLotto();
     });
   }
 }

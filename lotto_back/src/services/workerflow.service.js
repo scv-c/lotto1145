@@ -1,9 +1,8 @@
-import { AppError, NotFoundError } from "../utils/error.util.js";
 import { LottoUtil } from "../utils/Lotto.util.js";
-import { ResponseUtil } from "../utils/response.util.js";
 import { DailyLottoService } from "./dailyLotto.service.js";
 import { UserService } from "./user.service.js";
 import { UserLottoService } from "./userLotto.service.js";
+import { myEventEmitter } from "../utils/eventEmitter.util.js";
 
 export class WorkerflowService {
   constructor() {
@@ -14,6 +13,11 @@ export class WorkerflowService {
 
   async batchCreateDailyLotto() {
     const dailyLottoInfo = await this.dailyLottoService.createDailyLotto();
+    myEventEmitter.emit("ioEmit", {
+      event: "updateNewSeq",
+      data: dailyLottoInfo,
+    });
+
     const userLottoLists =
       await this.userLottoService.getAllUserSameSeqLottos();
 
@@ -41,6 +45,9 @@ export class WorkerflowService {
       distinctMaxScoreLottoLists
     ); // 업데이트에 사용할 로또 정보 추출
 
-    return await this.userSevice.updateUsersMaxScore(userUpdateLists);
+    await this.userSevice.updateUsersMaxScore(userUpdateLists);
+
+    //새로 생성한 DailyLotto정보 회신
+    return dailyLottoInfo;
   }
 }

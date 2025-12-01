@@ -62,7 +62,7 @@ export class UserService {
   /**
    * UUID기준 유저별 MaxScore값을 업데이트 한다.
    * @param {object[]} updateLottoLists 업데이트할 목록
-   * @returns 
+   * @returns
    */
   async updateUsersMaxScore(updateLottoLists) {
     if (updateLottoLists.length == 0) return;
@@ -85,6 +85,19 @@ export class UserService {
       })
       .where(`UUID IN (:...uuids)`, { uuids })
       .execute();
+  }
+
+  /**
+   * MaxScore값이 존재하는 유저만 조회합니다.
+   * @returns
+   */
+  async getAllUserWithMaxScore() {
+    const repo = this.getRepository();
+    return await repo
+      .createQueryBuilder()
+      .where("MaxScore IS NOT NULL")
+      .orderBy("MaxScore", "DESC", "NULLS LAST")
+      .getMany();
   }
 
   //getAllUsers(), deleteUser(uuid) 는 안 쓰는것을 권장.

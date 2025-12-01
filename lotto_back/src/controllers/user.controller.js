@@ -29,6 +29,11 @@ export class UserController {
     res.status(200).json(ResponseUtil.success(users,"Users retrieved successfully"));
   });
 
+  getAllUsersWithMaxScore = asyncHandler(async (req,res) => {
+    const users = await this.userService.getAllUserWithMaxScore();
+    res.status(200).json(ResponseUtil.success(users, "Users who have MaxScore retrieved successfully"));
+  });
+
   getAllUsers = asyncHandler(async (req, res) => {
     const users = await this.userService.getAllUsers();
     res

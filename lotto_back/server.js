@@ -2,9 +2,8 @@ import "reflect-metadata";
 import dotenv from "dotenv";
 import app from "./src/app.js";
 import http from "http";
-import { Server } from "socket.io";
 import { dbConnector } from "./src/config/dbConnector.js";
-import SocketConnector from "./src/utils/socket.util.js";
+import socketConnector from "./src/utils/socket.util.js";
 import { DailyLottoCron } from "./src/cron/dailyLotto.cron.js";
 
 dotenv.config();
@@ -18,7 +17,7 @@ async function startServer() {
 
     // HTTP서버 생성 후, socket.io 연결
     const server = http.createServer(app);
-    new SocketConnector(server).init();
+    socketConnector.init(server);
     new DailyLottoCron().init();
 
     server.listen(PORT, () => {

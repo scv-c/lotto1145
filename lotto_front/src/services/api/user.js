@@ -7,3 +7,6 @@ export const initUser = async (id) =>
 
 export const getUser = async () =>
   await api.get(`/api/users`).then((res) => res.data);
+
+export const getUserWithMaxSource = async () =>
+  await api.get(`/api/users/getMaxScore`).then((res) => res.data);
