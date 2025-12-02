@@ -16,6 +16,8 @@ export class UserController {
 
   getUserByUUID = asyncHandler(async (req, res) => {
     const { H_U_I_1 } = req.cookies;
+    console.log("이거 실패냐? H:",H_U_I_1);
+    
     const user = await this.userService.getUserByUUID(H_U_I_1);
     res
       .status(200)

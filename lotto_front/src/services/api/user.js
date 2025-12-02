@@ -6,7 +6,7 @@ export const initUser = async (id) =>
     .then((res) => res.data);
 
 export const getUser = async () =>
-  await api.get(`/api/users`).then((res) => res.data);
+  await api.get(`/api/users/getUser`).then((res) => res.data);
 
 export const getUserWithMaxSource = async () =>
   await api.get(`/api/users/getMaxScore`).then((res) => res.data);

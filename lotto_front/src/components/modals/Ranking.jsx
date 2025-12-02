@@ -6,8 +6,10 @@ import { getUserListSlice } from "../../services/store/userListSlice.js";
 import "./Ranking.css";
 
 export default function Ranking({ onClose }) {
-  const dispatch = useDispatch();
+  const userUUID = useSelector((state) => state.user.UUID);
+  const userMaxScore = useSelector((state) => state.user.MaxScore);
   const userList = useSelector((state) => state.userList.userListForRank);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getUserListSlice());
@@ -17,10 +19,6 @@ export default function Ranking({ onClose }) {
     };
   }, []);
 
-  useEffect(() => {
-    console.log(userList);
-  }, [userList]);
-
   const getMedalEmotion = (index) => {
     if (index === 0) return "🥇";
     if (index === 1) return "🥈";
@@ -29,17 +27,56 @@ export default function Ranking({ onClose }) {
   };
 
   const rankView = userList.map((e, i) => {
+    if (i > 50) return;
+
     let medal = getMedalEmotion(i);
     const { UUID, MaxScore } = e;
 
     return (
-      <li key={`${e.No}${new Date().toString()}`}>
-        <span>{medal || i + 1}</span>
-        <span>{UUID}</span>
-        <span>{MaxScore}</span>
-      </li>
+      <tr
+        key={`${e.No}${new Date().toString()}`}
+        className={UUID == userUUID ? "rank-mine" : ""}
+      >
+        <td>
+          <span>{medal || i + 1}</span>
+        </td>
+        <td>
+          <span>{UUID}</span>
+        </td>
+        <td>
+          <span>{MaxScore}</span>
+        </td>
+      </tr>
     );
   });
+
+  const myRankView = () => {
+    let rankSeq = userList.findIndex((e) => e.UUID === userUUID);
+    let rankValue = null;
+    if (rankSeq < 0) {
+      rankValue = "???";
+    } else if (0 <= rankSeq && rankSeq <= 2) {
+      rankValue = getMedalEmotion(rankSeq);
+    } else {
+      rankValue = rankSeq + 1;
+    }
+
+    return (
+      <div className="rank-me">
+        <div>
+          <span>
+            {rankValue}
+          </span>
+        </div>
+        <div>
+          <span>{userUUID}</span>
+        </div>
+        <div>
+          <span>{userMaxScore}</span>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <Modal
@@ -48,9 +85,19 @@ export default function Ranking({ onClose }) {
       title="랭킹"
     >
       <div>
-        <ul>
-          {rankView}
-        </ul>
+        <table className="rank-table style-clean">
+          <thead>
+            <tr>
+              <td>순위</td>
+              <td>이름</td>
+              <td>점수</td>
+            </tr>
+          </thead>
+          <tbody>{rankView}</tbody>
+        </table>
+      </div>
+      <div>
+        {myRankView()}
       </div>
     </Modal>
   );

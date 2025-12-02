@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import "./App.css";
 import Dashboard from "./components/Dashboard";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import LottoButton from "./components/LottoButton";
 import { useDispatch } from "react-redux";
-import { setUUID } from "./services/store/uuidSlice";
+import { getUserSlice, setUUID } from "./services/store/userSlice.js";
 import { setHistoryLottoList } from "./services/store/lottoSlice.js";
 import { loadUser } from "./services/storage/userStorage.js";
 import { initUser } from "./services/api/user.js";
@@ -14,27 +14,39 @@ import socket from "./services/api/socket.js";
 import { setSeqLottoInfo } from "./services/store/seqLottoSlice.js";
 
 function App() {
-  const [history, setHistory] = useState([]); // 이전 결과들 누적
-  const [lotto, setLotto] = useState([]);
   const initRef = useRef(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (initRef.current) return;
-    console.log("진행~");
     initRef.current = true;
+
     const myUUID = loadUser();
-    const result = initUser(myUUID)
-      .then((res) => {
-        dispatch(setUUID(myUUID));
-        console.log("zz");
-      })
-      .then(getUserLottoList)
-      .then((res) => {
-        const myHistoryLottoList = res.data;
-        dispatch(setHistoryLottoList(myHistoryLottoList));
-        initRef.current = false;
-      });
+
+    const initFlow = async (uuid) => {
+      try {
+        await initUser(uuid); //
+        const res = await dispatch(getUserSlice());
+        if (res.error) {
+          console.log("getUserSlice 실패, UUID 세팅");
+          dispatch(setUUID(uuid));
+          return;
+        }
+
+        try {
+          const lottoList = await getUserLottoList();
+          dispatch(setHistoryLottoList(lottoList.data));
+        } catch (err) {
+          console.log("getUserLottoList 실패, 무시:", err);
+        }
+      } catch (err) {
+        console.log("initUser 자체 실패:", err);
+      } finally {
+        initRef.current = false; // 항상 마지막 처리
+      }
+    };
+
+    initFlow(myUUID);
   }, []);
 
   useEffect(() => {
@@ -45,8 +57,9 @@ function App() {
   return (
     <>
       <Header />
-      <Dashboard />
-      <LottoButton />
+      <Dashboard>
+        <LottoButton />
+      </Dashboard>
       <Footer />
     </>
   );

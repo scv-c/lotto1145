@@ -29,7 +29,7 @@ export class UserService {
 
   async getUserByUUID(uuid) {
     const repo = this.getRepository();
-    const user = await repo.findOne({ where: { UUID: uuid } });
+    const user = await repo.findOne({ where: { UUID: uuid } });    
 
     if (!user) {
       throw new NotFoundError("User not found");

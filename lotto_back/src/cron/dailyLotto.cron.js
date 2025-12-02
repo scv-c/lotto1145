@@ -8,7 +8,7 @@ export class DailyLottoCron {
   }
 
   init() {
-    cron.schedule("* * * * *", async () => {
+    cron.schedule("*/3 * * * *", async () => {
       console.log(
         `${Date().toString()} 5분간격 자동 업데이트 실행! // 임시 매분, }`
       );
