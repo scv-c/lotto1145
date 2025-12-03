@@ -8,9 +8,9 @@ export class DailyLottoCron {
   }
 
   init() {
-    cron.schedule("*/3 * * * *", async () => {
+    cron.schedule("*/2 * * * *", async () => {
       console.log(
-        `${Date().toString()} 5분간격 자동 업데이트 실행! // 임시 매분, }`
+        `${Date().toString()} 2분간격 자동 업데이트 실행! // 임시 매분, }`
       );
 
       await this.workerflowService.batchCreateDailyLotto();

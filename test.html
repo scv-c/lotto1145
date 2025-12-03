@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+    /* 배경 및 모달 기본 설정 */
+    .modal-overlay {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex; justify-content: center; align-items: center;
+        z-index: 1000;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .modal-card {
+        background: white;
+        width: 400px;
+        padding: 40px 30px;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        text-align: center;
+        position: relative;
+    }
+
+    .modal-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 40px;
+    }
+
+    /* --- [핵심] 입력창 래퍼 (아이콘 + 인풋 + 툴팁 위치 기준) --- */
+    .input-wrapper {
+        position: relative;
+        margin-bottom: 40px;
+        width: 100%;
+    }
+
+    /* 1. 연필 아이콘 */
+    .input-icon {
+        position: absolute;
+        left: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.2rem;
+        color: #999;
+        pointer-events: none; /* 아이콘 클릭해도 인풋에 포커스 가도록 */
+    }
+
+    /* 2. 입력창 스타일 */
+    .custom-input {
+        width: 100%;
+        padding: 10px 10px 10px 35px; /* 왼쪽 패딩을 줘서 아이콘 공간 확보 */
+        font-size: 1.1rem;
+        border: none;
+        border-bottom: 2px solid #ddd;
+        outline: none;
+        text-align: center; /* 텍스트 중앙 정렬 */
+        transition: border-color 0.3s;
+        box-sizing: border-box;
+        background: transparent;
+    }
+
+    .custom-input:focus {
+        border-bottom-color: #3b82f6;
+    }
+
+    /* 3. 툴팁 (Tooltip) 스타일 */
+    .tooltip {
+        position: absolute;
+        bottom: 100%; /* 입력창 바로 위 */
+        left: 50%;
+        transform: translateX(-50%); /* 가로 중앙 정렬 */
+        background-color: #ef4444; /* 경고 레드 */
+        color: white;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        white-space: nowrap;
+        opacity: 0; /* 평소엔 안 보임 */
+        visibility: hidden;
+        transition: opacity 0.3s, transform 0.3s;
+        margin-bottom: 10px; /* 입력창과 간격 */
+        pointer-events: none;
+    }
+
+    /* 툴팁 말풍선 꼬리 */
+    .tooltip::after {
+        content: "";
+        position: absolute;
+        top: 100%; /* 툴팁 바닥 */
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #ef4444 transparent transparent transparent;
+    }
+
+    /* 툴팁 활성화 클래스 */
+    .tooltip.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(-5px); /* 살짝 위로 떠오르는 효과 */
+    }
+
+    /* 버튼 그룹 */
+    .btn-group {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .btn {
+        padding: 12px 0;
+        width: 100%;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s;
+        font-size: 1rem;
+    }
+
+    .btn-cancel { background: #f3f4f6; color: #666; }
+    .btn-cancel:hover { background: #e5e7eb; }
+
+    .btn-confirm { background: #3b82f6; color: white; }
+    .btn-confirm:hover { background: #2563eb; }
+
+</style>
+</head>
+<body>
+
+    <div class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-title">닉네임 변경</div>
+            
+            <div class="input-wrapper">
+                <span class="input-icon">✏️</span>
+                
+                <input type="text" id="nickInput" class="custom-input" placeholder="새 닉네임 (최대 7자)" maxlength="7">
+                
+                <div id="limitTooltip" class="tooltip">최대 7글자까지만 입력 가능해요! 😅</div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-cancel">취소</button>
+                <button class="btn btn-confirm">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const input = document.getElementById('nickInput');
+        const tooltip = document.getElementById('limitTooltip');
+        let tooltipTimer; // 타이머 저장 변수
+
+        // 키를 눌렀을 때 이벤트 감지
+        input.addEventListener('keydown', function(e) {
+            const currentLength = input.value.length;
+            
+            // 허용되는 기능키들 (백스페이스, 딜리트, 화살표 등은 막으면 안 됨)
+            const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter'];
+            
+            // 7글자가 꽉 찼는데 + 기능키가 아니고 + 일반 키를 입력하려 할 때
+            if (currentLength >= 7 && !allowedKeys.includes(e.key)) {
+                showTooltip();
+            }
+        });
+
+        // 툴팁 보여주기 함수
+        function showTooltip() {
+            tooltip.classList.add('show');
+            
+            // 기존 타이머가 있다면 취소 (연타 방지)
+            if (tooltipTimer) clearTimeout(tooltipTimer);
+
+            // 1.5초 뒤에 자동으로 사라짐
+            tooltipTimer = setTimeout(() => {
+                tooltip.classList.remove('show');
+            }, 1500);
+        }
+
+        // 포커스를 잃으면 즉시 툴팁 끄기
+        input.addEventListener('blur', () => {
+            tooltip.classList.remove('show');
+        });
+    </script>
+
+</body>
+</html>

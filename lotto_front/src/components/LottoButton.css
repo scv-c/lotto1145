@@ -1,0 +1,62 @@
+.dashboard-btn-layer {
+    display : flex;
+    justify-content: center;
+}
+
+.create-button{
+    display: flex;             
+    align-items: center;      
+    gap: 15px;                 /* 원과 글자 사이 간격 */        
+    background: white;
+    padding: 20px 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+
+    height: 6cqw;   /* 원 크기 */
+}
+
+.create-button .spinner {
+    position: relative;
+    width: 50px;    /* 원 크기 */
+    height: 50px;   /* 원 크기 */
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.create-button .spinner.btn-waiting {
+    display:flex
+}
+
+/* 회전하는 테두리 */
+.spinner::after {
+    content: "";
+    position: absolute;
+    inset: 0; /* 부모 크기에 꽉 차게 */
+    border-radius: 50%;
+    border: 4px solid #eee;        /* 배경 링 색상 */
+    border-top-color: #3b82f6;     /* 돌아가는 색상 (파랑) */
+    border-right-color: #3b82f6;   /* 그라데이션 느낌을 위해 한쪽 더 */
+    
+    animation: spin 1.5s linear infinite;
+}
+
+/* 가운데 숫자 (회전 안 함) */
+.timer-text {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #333;
+    z-index: 1; /* 테두리 위로 올라오게 */
+}
+
+.text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* 애니메이션 키프레임 */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
