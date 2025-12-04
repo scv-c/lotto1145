@@ -1,23 +1,51 @@
 // Ranking.jsx - 이렇게 수정
 import Modal from "./Modal.jsx";
-import { useDispatch, useSelector } from "react-redux";
 import "./Nickname.css";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
+import { updateUserNickname } from "../../services/api/user.js";
+import { setNickname } from "../../services/store/userSlice.js";
+import useToast from "../../services/hooks/useToast.js";
 
 export default function Nickname({ onClose }) {
-  const [nickname, setNickname] = useState("");
+  const [newNickname, setNewNickname] = useState("");
   const [showTooltip, setShowTooltip] = useState(false);
   const inputRef = useRef(null);
+  const userNickname = useSelector((state) => state.user.Nickname);
+  const { showToast } = useToast();
   const dispatch = useDispatch();
 
   useEffect(() => {
+    setNewNickname(userNickname); // defaultValue로 설정해봤는데, palceHolder에 가려짐. 초기값으로 설정해줌.
+
     if (inputRef.current) {
       inputRef.current.focus();
     }
   }, []);
 
+  const okPostHandler = async () => {
+    updateUserNickname(newNickname)
+      .then((res) => {
+        showToast("success", "닉네임 변경 성공");
+        dispatch(setNickname(newNickname));
+        onClose();
+        return res;
+      })
+      .catch((e) => {
+        const { message, statusCode } = e.response.data;
+        if (message === "Database query failed") {
+          showToast("error", "중복된 닉네임입니다. 다시 입력하세요.");
+        } else if (message === "Fail update. Not Find uuid") {
+          showToast("error", "1번 이상 로또를 생성해야 합니다!");
+        } else {
+          showToast("error", e.message);
+        }
+        return e;
+      });
+  };
+
   const handleNicknameChange = (e) => {
-    setNickname(e.target.value);
+    setNewNickname(e.target.value);
   };
 
   const handleKeyDown = (e) => {
@@ -30,9 +58,8 @@ export default function Nickname({ onClose }) {
       "Enter",
     ];
 
-    console.log("dpd?")
     // 길이가 7 이상이고 + 허용된 키가 아니면 -> 툴팁 발사
-    if (nickname.length >= 7 && !allowedKeys.includes(e.key)) {
+    if (newNickname?.length >= 7 && !allowedKeys.includes(e.key)) {
       setShowTooltip(true);
 
       setTimeout(() => {
@@ -46,6 +73,7 @@ export default function Nickname({ onClose }) {
       isOpen={true} // 항상 열린 상태
       onClose={onClose}
       title="닉네임 변경"
+      onOkPost={okPostHandler}
     >
       <div className="input-wrapper">
         <span className="input-icon">✏️</span>
@@ -59,7 +87,8 @@ export default function Nickname({ onClose }) {
           maxLength="7"
           onChange={handleNicknameChange}
           onKeyDown={handleKeyDown}
-          value={nickname}
+          value={newNickname || ""}
+          autoComplete="off"
         />
 
         <div className={`tooltip ${showTooltip ? "show" : ""}`}>

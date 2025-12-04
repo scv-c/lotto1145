@@ -31,6 +31,17 @@ export const errorHandler = (err, req, res, next) => {
  */
 export const asyncHandler = (fn) => {
   return (req, res, next) => {
-    Promise.resolve(fn(req, res, next)).catch(next);
+    const handlerName = fn.name || "anonymous_hanlder";
+    req.logger.info(`[START] ${handlerName} 호출`);
+
+    Promise.resolve(fn(req, res, next))
+      .then((res) => {
+        req.logger.info(`[FINISH] ${handlerName} 완료`);
+        return res;
+      })
+      .catch((e) => {
+        req.logger.error(`[ERROR] ${handlerName}: ${e.message}`);
+        return next(e);
+      });
   };
 };

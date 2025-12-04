@@ -7,47 +7,68 @@ export class UserController {
     this.userService = new UserService();
   }
 
-  createUser = asyncHandler(async (req, res) => {
+  createUser = async (req, res) => {
     const user = await this.userService.createUser();
     res
       .status(201)
       .json(ResponseUtil.success(user, "User created successfully", 201));
-  });
+  };
 
-  getUserByUUID = asyncHandler(async (req, res) => {
+  getUserByUUID = async (req, res) => {
     const { H_U_I_1 } = req.cookies;
-    console.log("이거 실패냐? H:",H_U_I_1);
-    
+    console.log("이거 실패냐? H:", H_U_I_1);
+
     const user = await this.userService.getUserByUUID(H_U_I_1);
     res
       .status(200)
       .json(ResponseUtil.success(user, "User retrieved successfully"));
-  });
+  };
 
   //테스트용 control 삽입
-  getUsersByMultiUUID = asyncHandler(async (req, res) => {
+  getUsersByMultiUUID = async (req, res) => {
     const { uuids } = req.body;
     const users = await this.userService.getUsersByMultiUUID(uuids);
-    res.status(200).json(ResponseUtil.success(users,"Users retrieved successfully"));
-  });
+    res
+      .status(200)
+      .json(ResponseUtil.success(users, "Users retrieved successfully"));
+  };
 
-  getAllUsersWithMaxScore = asyncHandler(async (req,res) => {
+  getAllUsersWithMaxScore = async (req, res) => {
     const users = await this.userService.getAllUserWithMaxScore();
-    res.status(200).json(ResponseUtil.success(users, "Users who have MaxScore retrieved successfully"));
-  });
+    res
+      .status(200)
+      .json(
+        ResponseUtil.success(
+          users,
+          "Users who have MaxScore retrieved successfully"
+        )
+      );
+  };
 
-  getAllUsers = asyncHandler(async (req, res) => {
+  getAllUsers = async (req, res) => {
     const users = await this.userService.getAllUsers();
     res
       .status(200)
       .json(ResponseUtil.success(users, "Users retrieved successfully"));
-  });
+  };
 
-  deleteUser = asyncHandler(async (req, res) => {
+  updateNickname = async (req, res) => {
+    const { H_U_I_1 } = req.cookies;
+    const { nickname } = req.body;
+
+    //console.log(`updateNickname Controller 로그입니다. H_U_I_1 : ${H_U_I_1}, nickname : ${nickname}`)
+
+    const user = await this.userService.updateNickname(H_U_I_1, nickname);
+    res
+      .status(200)
+      .json(ResponseUtil.success(user, "Update User Nickname successfully"));
+  };
+
+  deleteUser = async (req, res) => {
     const { uuid } = req.params;
     await this.userService.deleteUser(uuid);
     res
       .status(200)
       .json(ResponseUtil.success(null, "User deleted successfully"));
-  });
+  };
 }

@@ -1,6 +1,10 @@
 import { dbConnector } from "../config/dbConnector.js";
 import { User } from "../entities/User.entity.js";
-import { NotFoundError, ConflictError } from "../utils/error.util.js";
+import {
+  NotFoundError,
+  ConflictError,
+  BadRequestError,
+} from "../utils/error.util.js";
 
 export class UserService {
   constructor() {
@@ -29,7 +33,7 @@ export class UserService {
 
   async getUserByUUID(uuid) {
     const repo = this.getRepository();
-    const user = await repo.findOne({ where: { UUID: uuid } });    
+    const user = await repo.findOne({ where: { UUID: uuid } });
 
     if (!user) {
       throw new NotFoundError("User not found");
@@ -87,8 +91,21 @@ export class UserService {
       .execute();
   }
 
+  async updateNickname(uuid, nickname) {
+    const repo = this.getRepository();
+
+    const result = await repo.update({ UUID: uuid }, { Nickname: nickname });
+
+    if (result.affected === 0) {
+      throw new BadRequestError("Fail update. Not Find uuid");
+    }
+
+    return result;
+  }
+
   /**
    * MaxScore값이 존재하는 유저만 조회합니다.
+   * (+)최대 50명만 노출시키기위해, limit을 줍니다.
    * @returns
    */
   async getAllUserWithMaxScore() {
@@ -97,6 +114,7 @@ export class UserService {
       .createQueryBuilder()
       .where("MaxScore IS NOT NULL")
       .orderBy("MaxScore", "DESC", "NULLS LAST")
+      .limit(50)
       .getMany();
   }
 

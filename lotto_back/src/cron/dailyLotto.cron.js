@@ -1,6 +1,5 @@
 import cron from "node-cron";
 import { WorkerflowService } from "../services/workerflow.service.js";
-import socketConnector from "../utils/socket.util.js";
 export class DailyLottoCron {
   constructor() {
     console.log(`DailyLottoCron 실행`);

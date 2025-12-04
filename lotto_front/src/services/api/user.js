@@ -10,3 +10,12 @@ export const getUser = async () =>
 
 export const getUserWithMaxSource = async () =>
   await api.get(`/api/users/getMaxScore`).then((res) => res.data);
+
+export const updateUserNickname = async (nickname) =>
+  await api
+    .post(
+      `/api/users/updateNickname`,
+      { nickname: nickname },
+      { withCredentials: true }
+    )
+    .then((res) => res.data);

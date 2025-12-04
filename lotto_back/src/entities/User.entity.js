@@ -14,6 +14,11 @@ export const User = new EntitySchema({
       unique: true,
       nullable: false,
     },
+    Nickname: {
+      type: "varchar",
+      unique: true,
+      nullable: true,
+    },
     MaxScore: {
       type: "integer",
       nullable: true,

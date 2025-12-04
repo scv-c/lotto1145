@@ -12,6 +12,7 @@ import { initUser } from "./services/api/user.js";
 import { getUserLottoList } from "./services/api/lotto.js";
 import socket from "./services/api/socket.js";
 import { setSeqLottoInfo } from "./services/store/seqLottoSlice.js";
+import { ToastContainer, Zoom } from "react-toastify";
 
 function App() {
   const initRef = useRef(false);
@@ -61,6 +62,20 @@ function App() {
         <LottoButton />
       </Dashboard>
       <Footer />
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        limit={3}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Zoom}
+      />
     </>
   );
 }

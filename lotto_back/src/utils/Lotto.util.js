@@ -73,7 +73,7 @@ export class LottoUtil {
 
   /**
    * 로또 정보들에서 중복을 제거 하며, AnsCount가 가장 높은 로또정보(MaxScore)만 반환
-   * @param {object[]} userLottoLists 
+   * @param {object[]} userLottoLists
    * @returns object[]
    */
   static getDistinctMaxScoreLottoList(userLottoLists) {
@@ -91,19 +91,21 @@ export class LottoUtil {
 
   /**
    * 업데이트할 내용 중, 현재 맞춘 수보다 작은 것들은 제거.
-   * @param {object[]} userList 
-   * @param {object[]} userLottoLists 
-   * @returns 
+   * @param {object[]} userList
+   * @param {object[]} userLottoLists
+   * @returns
    */
   static getUserListsNeedUpdateMaxScore(userList, userLottoLists) {
     const updateList = [];
 
-    for(const userLottoList of userLottoLists) {
-      const {UUID, AnsCount} = userLottoList;
-      const user = userList.find(e=>e.UUID == UUID);
-      
-      if(user.MaxScore < AnsCount) {
-        console.log(`최대점수 비교 ${UUID} | AnsCount : ${AnsCount} | MaxScore : ${user.MaxScore}`);
+    for (const userLottoList of userLottoLists) {
+      const { UUID, AnsCount } = userLottoList;
+      const user = userList.find((e) => e.UUID == UUID);
+
+      if (user.MaxScore < AnsCount) {
+        console.log(
+          `최대점수 비교 ${UUID} | AnsCount : ${AnsCount} | MaxScore : ${user.MaxScore}`
+        );
         updateList.push(userLottoList);
       }
     }

@@ -1,8 +1,18 @@
-import React from 'react';
-import './Modal.css';
+import React from "react";
+import "./Modal.css";
 
-function Modal({ isOpen, onClose, title, children }) {
+//onOkPost 혹은 onOkGet은 내부에 onClose()동작을 플로우상 구현해놓아야 함.
+function Modal({ isOpen, onClose, onOkPost, onOkGet, title, children }) {
   if (!isOpen) return null;
+
+  const onModalOkButtonEvent = () => {
+    if (onOkPost) {
+      onOkPost();
+    }
+    if (onOkGet) {
+      onOkGet();
+    }
+  };
 
   return (
     <>
@@ -21,16 +31,17 @@ function Modal({ isOpen, onClose, title, children }) {
           </div>
 
           {/* 모달 본문 */}
-          <div className="modal-body">
-            {children}
-          </div>
+          <div className="modal-body">{children}</div>
 
           {/* 모달 푸터 */}
           <div className="modal-footer">
             <button className="modal-btn modal-btn-cancel" onClick={onClose}>
               취소
             </button>
-            <button className="modal-btn modal-btn-confirm" onClick={onClose}>
+            <button
+              className="modal-btn modal-btn-confirm"
+              onClick={onModalOkButtonEvent}
+            >
               확인
             </button>
           </div>

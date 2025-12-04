@@ -7,6 +7,7 @@ import "./Ranking.css";
 
 export default function Ranking({ onClose }) {
   const userUUID = useSelector((state) => state.user.UUID);
+  const userNickname = useSelector((state)=> state.user.Nickname);
   const userMaxScore = useSelector((state) => state.user.MaxScore);
   const userList = useSelector((state) => state.userList.userListForRank);
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ export default function Ranking({ onClose }) {
     if (i > 50) return;
 
     let medal = getMedalEmotion(i);
-    const { UUID, MaxScore } = e;
+    const { UUID, MaxScore, Nickname } = e;
 
     return (
       <tr
@@ -41,7 +42,7 @@ export default function Ranking({ onClose }) {
           <span>{medal || i + 1}</span>
         </td>
         <td>
-          <span>{UUID}</span>
+          <span>{Nickname || UUID}</span>
         </td>
         <td>
           <span>{MaxScore}</span>
@@ -69,7 +70,7 @@ export default function Ranking({ onClose }) {
           </span>
         </div>
         <div>
-          <span>{userUUID}</span>
+          <span>{userNickname || userUUID}</span>
         </div>
         <div>
           <span>{userMaxScore}</span>

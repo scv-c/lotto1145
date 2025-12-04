@@ -55,8 +55,8 @@ export class UserLottoService {
   }
 
   /**
-   * 특정 유저의 Lotto정보 전체 조회
-   * @param {string} uuid 
+   * 특정 유저의 Lotto정보 전체 조회. 데이터를 위해 take
+   * @param {string} uuid
    * @returns array
    */
   async getUserLottosByUUID(uuid) {
@@ -67,6 +67,7 @@ export class UserLottoService {
     return await repo.find({
       where: { UUID: uuid },
       order: { No: "DESC" },
+      take: 50,
     });
   }
 

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getUser } from "../api/user";
+import { getUser, updateUserNickname } from "../api/user";
 
 export const getUserSlice = createAsyncThunk("user/getUser", async () => {
   return await getUser();
@@ -11,12 +11,16 @@ const userSlice = createSlice({
     No: null,
     UUID: null,
     MaxScore: null,
+    Nickname: null,
     status: "idle",
     error: null,
   },
   reducers: {
     setUUID(state, action) {
       state.UUID = action.payload;
+    },
+    setNickname(state, action) {
+      state.Nickname = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -35,5 +39,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUUID } = userSlice.actions;
+export const { setUUID, setNickname } = userSlice.actions;
 export default userSlice.reducer;
