@@ -36,7 +36,7 @@ app.use("/api/daily-lotto", dailyLottoRoutes);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const frontendDistPath = path.join(__dirname, "../fe_dist");
+const frontendDistPath = path.join(__dirname, "../client/dist");
 
 app.use(express.static(frontendDistPath));
 
