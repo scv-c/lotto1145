@@ -2,15 +2,6 @@
   "name": "lotto_back",
   "version": "1.0.0",
   "description": "lotto1145_backend",
-  "keywords": [],
-  "homepage": "https://github.com/scv-c/lotto1145_back#readme",
-  "bugs": {
-    "url": "https://github.com/scv-c/lotto1145_back/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/scv-c/lotto1145_back.git"
-  },
   "license": "ISC",
   "author": "",
   "type": "module",
