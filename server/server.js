@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import app from "./src/app.js";
 import http from "http";
 import { dbConnector } from "./src/config/dbConnector.js";
-import socketConnector from "./src/utils/socket.util.js";
+import socketConnector from "./src/utils/socket.util.js";1
 import { DailyLottoCron } from "./src/cron/dailyLotto.cron.js";
 
 dotenv.config();

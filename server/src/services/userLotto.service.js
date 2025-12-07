@@ -84,7 +84,7 @@ export class UserLottoService {
   async getAllUserSameSeqLottos() {
     const repo = this.getRepository();
 
-    const from = LottoUtil.getBefore5mSeq();
+    const from = LottoUtil.getBeforeMinutesSeq(2);
     const end = LottoUtil.getCurrentSeq();
 
     return await repo

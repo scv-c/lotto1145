@@ -54,6 +54,11 @@ export class WorkerflowService {
       logger.info(
         `[SERVICE] [ID ${transactionID}] [INFO] updateUserLotto 성공`
       );
+      
+      myEventEmitter.emit("ioEmit", {
+        event: "curSeqHighScoreUser",
+        data: LottoUtil.getHighScoreUserInCurrentSeq(userLottoLists),
+      });
 
       //유저별 최고 수 업데이트
       const userList = await this.userSevice.getUsersByMultiUUID(uuids); // 회차별 참여한 유저정보
@@ -71,7 +76,7 @@ export class WorkerflowService {
       );
 
       //새로 생성한 DailyLotto정보 회신
-      
+
       logger.info(
         `[SERVICE] [ID ${transactionID}] [FINISH] batchCreateDailyLotto 종료`
       );

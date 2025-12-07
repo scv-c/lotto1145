@@ -1,3 +1,4 @@
+import e from "cors";
 import dayjs from "dayjs";
 
 /**
@@ -29,12 +30,13 @@ export class LottoUtil {
   }
 
   /**
-   * 현재 시간에서 5분 전 시간 구함.
-   * @returns {string} YYYY-MM-DD HH:mm 형식의 시간
+   * 현재시간에서 num분만큼 이전의 시간을 구함
+   * @param {number} num
+   * @returns
    */
-  static getBefore5mSeq() {
+  static getBeforeMinutesSeq(num) {
     const now = dayjs();
-    return now.subtract(5, "m").format("YYYY-MM-DD HH:mm");
+    return now.subtract(num, "m").format("YYYY-MM-DD HH:mm");
   }
 
   /**
@@ -111,5 +113,24 @@ export class LottoUtil {
     }
 
     return updateList;
+  }
+
+  //가장 많이 맞춘 사람 목록 가져오기.
+  static getHighScoreUserInCurrentSeq(userLottoLists) {
+    let highScore = 0;
+    let users = [];
+
+    userLottoLists.map((userLottoList) => {
+      if (highScore > userLottoList.AnsCount) return;
+
+      if (highScore == userLottoList.AnsCount) {
+        users.push(userLottoList);
+      } else {
+        highScore = userLottoList.AnsCount;
+        users = [userLottoList];
+      }
+    });
+
+    return users;
   }
 }

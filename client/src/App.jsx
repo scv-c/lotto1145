@@ -13,9 +13,11 @@ import { getUserLottoList } from "./services/api/lotto.js";
 import socket from "./services/api/socket.js";
 import { setSeqLottoInfo } from "./services/store/seqLottoSlice.js";
 import { ToastContainer, Zoom } from "react-toastify";
+import useToast from "./services/hooks/useToast.js";
 
 function App() {
   const initRef = useRef(false);
+  const { showToast } = useToast();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -53,6 +55,17 @@ function App() {
   useEffect(() => {
     socket.on("updateNewSeq", (data) => {
       dispatch(setSeqLottoInfo(data));
+    });
+
+    socket.on("curSeqHighScoreUser", (data) => {
+      if (data.length === 0) return;
+      const score = data[0].AnsCount;
+      const userList = data.map((e) => e.UUID);
+
+      showToast(
+        "default",
+        `새로운 회차 최고득점 ${score}! 축하드립니다. \n ${userList.join("\n")}`
+      );
     });
   }, []);
   return (

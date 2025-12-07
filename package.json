@@ -1,0 +1,22 @@
+{
+  "name": "lotto-service-root",
+  "version": "1.0.0",
+  "homepage": "https://github.com/scv-c/lotto1145#readme",
+  "bugs": {
+    "url": "https://github.com/scv-c/lotto1145/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scv-c/lotto1145.git"
+  },
+  "scripts": {
+    "start": "node server/app.js",
+    "install-all": "cd client && npm install && cd ../server && npm install",
+    "build": "cd client && npm run build"
+  },
+  "license": "ISC",
+  "author": "",
+  "engines": {
+    "node": "22.x"
+  }
+}

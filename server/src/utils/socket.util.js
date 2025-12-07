@@ -17,7 +17,7 @@ class SocketConnector {
 
     this.http = httpServer;
     this.io = new Server(this.http, {
-      origin: "http://localhost:5173",
+      origin: "https://lotto1145-front.vercel.app",
       methods: ["GET", "POST"],
       credentials: true,
     });
@@ -31,7 +31,7 @@ class SocketConnector {
     });
 
     this.myEventEmitter.on("ioEmit", ({ event, data }) => {
-      console.log(`데이터 확인 ${event}, ${data}`);
+      console.log(`데이터 확인 ${event}, ${JSON.stringify(data)}`);
       this.ioEmit(event, data);
     });
   }

@@ -23,7 +23,10 @@ const useToast = () => {
       case "error":
         toast.error(message, defaultOptions);
         break;
-      case "info":
+      case "default":
+        toast(message, defaultOptions);
+        break;
+      case "info":        
       default:
         toast.info(message, defaultOptions);
         break;

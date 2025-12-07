@@ -1,4 +1,4 @@
-import "./Lottobutton.css";
+import "./LottoButton.css";
 import { useDispatch } from "react-redux";
 import {
   setHistoryLottoList,
@@ -40,7 +40,8 @@ export default function LottoButton({ onClick }) {
             clearInterval(interval);
           }
         }, 1000);
-
+      })
+      .finally(() => {
         //세션당 여러번 반복 입력을 막기 위해 5초정도 타이머를 둠.
         setTimeout(() => {
           buttonCreateLottoRef.current = false;

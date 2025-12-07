@@ -53,7 +53,7 @@ export class UserService {
     const repo = this.getRepository();
     const users = await repo
       .createQueryBuilder()
-      .where(`UUID IN (:...uuids)`, { uuids })
+      .where(`"UUID" IN (:...uuids)`, { uuids })
       .getMany();
 
     if (users.length == 0) {
@@ -87,7 +87,7 @@ export class UserService {
       .set({
         MaxScore: () => `CASE ${cases.join(" ")} END`,
       })
-      .where(`UUID IN (:...uuids)`, { uuids })
+      .where(`"UUID" IN (:...uuids)`, { uuids })
       .execute();
   }
 
@@ -112,8 +112,8 @@ export class UserService {
     const repo = this.getRepository();
     return await repo
       .createQueryBuilder()
-      .where("MaxScore IS NOT NULL")
-      .orderBy("MaxScore", "DESC", "NULLS LAST")
+      .where(`"MaxScore" IS NOT NULL`)
+      .orderBy(`"MaxScore"`, "DESC")
       .limit(50)
       .getMany();
   }
