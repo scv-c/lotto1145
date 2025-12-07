@@ -1,13 +1,22 @@
-.dashboard .newLotto {
-  height: auto; /* 고정 높이 제거 */
-  min-height: 80px;
-  padding: clamp(10px, 3vw, 20px);
-  align-content: center;
+.dashboard {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
-/* 대시보드 반응형 */
-@media (max-width: 768px) {
-  .dashboard {
-    padding: 10px;
+.dashboard .newLotto {
+  min-height: 70px;
+  padding: 15px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .dashboard .newLotto {
+    min-height: 100px;
+    padding: 20px;
   }
 }

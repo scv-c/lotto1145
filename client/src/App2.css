@@ -1,60 +1,166 @@
+/* 전체 레이아웃 */
 #root {
-    max-width: min(1280px, 95vw); /* 화면의 95%를 넘지 않도록 */
+    max-width: 100%;
+    width: 100%;
     margin: 0 auto;
-    padding: clamp(1rem, 3vw, 2rem); /* 반응형 패딩 */
+    padding: 1rem;
     text-align: center;
+    box-sizing: border-box;
   }
   
-  /* 로또 볼 크기 반응형 */
+  @media (min-width: 768px) {
+    #root {
+      max-width: 1280px;
+      padding: 2rem;
+    }
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .card {
+    padding: 1.5em;
+  }
+  
+  /* 로또 볼 - 모바일 우선 */
   .lotto-ball-default {
-    width: clamp(40px, 10vw, 56px); /* 최소 40px, 최대 56px */
-    height: clamp(40px, 10vw, 56px);
-    font-size: clamp(14px, 3vw, 18px);
-    margin: clamp(3px, 1vw, 6px);
-    /* 나머지는 동일 */
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
+    font-size: 16px;
+    margin: 4px;
     box-shadow: 0 3px 0 rgba(0, 0, 0, 0.12),
       inset 0 -3px 6px rgba(255, 255, 255, 0.08);
     border: 2px solid rgba(0, 0, 0, 0.08);
     user-select: none;
+    flex-shrink: 0;
   }
   
-  /* 히스토리 영역 반응형 */
+  @media (min-width: 768px) {
+    .lotto-ball-default {
+      width: 56px;
+      height: 56px;
+      font-size: 18px;
+      margin: 6px;
+    }
+  }
+  
+  /* 색상 구간 */
+  .lotto-ball-1 { background: #f6c94b; color: #111; }
+  .lotto-ball-2 { background: #4aa0ff; color: #fff; }
+  .lotto-ball-3 { background: #ff6b6b; color: #fff; }
+  .lotto-ball-4 { background: #bdbdbd; color: #111; }
+  .lotto-ball-5 { background: #58d68d; color: #fff; }
+  
+  /* 히스토리 뷰 */
   .history-view {
-    width: min(720px, 100%); /* 최대 720px이지만 작은 화면에선 100% */
-    max-height: 380px;
+    width: 100%;
+    max-width: 720px;
+    max-height: 300px;
     overflow-y: auto;
-    margin-top: 20px;
+    margin: 20px auto 0;
     padding: 0 8px;
     cursor: grab;
+    box-sizing: border-box;
   }
   
+  .history-view:active {
+    cursor: grabbing;
+  }
+  
+  @media (min-width: 768px) {
+    .history-view {
+      max-height: 380px;
+    }
+  }
+  
+  /* 히스토리 아이템 */
   .history-item {
     display: flex;
     align-items: center;
-    gap: clamp(8px, 2vw, 14px);
-    padding: clamp(8px, 2vw, 10px) clamp(10px, 2vw, 16px);
-    margin-bottom: 14px;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px;
+    margin-bottom: 12px;
     background: #ffffff;
     border-radius: 12px;
     border: 1px dashed #bcd1ff;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    min-height: 64px;
+    min-height: 60px;
+    box-sizing: border-box;
   }
   
+  @media (min-width: 768px) {
+    .history-item {
+      gap: 14px;
+      padding: 10px 16px;
+      min-height: 64px;
+    }
+  }
+  
+  /* 회차 레이블 */
+  .history-item .history-label {
+    min-width: 40px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #3454d1;
+    text-align: left;
+    flex-shrink: 0;
+  }
+  
+  @media (min-width: 768px) {
+    .history-item .history-label {
+      min-width: 50px;
+      font-size: 14px;
+    }
+  }
+  
+  /* 번호 리스트 */
   .history-item ul {
     display: flex;
-    gap: clamp(6px, 1.5vw, 10px);
-    flex-wrap: wrap; /* 작은 화면에서 줄바꿈 허용 */
+    gap: 6px;
+    flex-wrap: wrap;
     margin: 0;
     padding: 0;
+    justify-content: center;
+    flex: 1;
   }
   
-  /* 메뉴 반응형 */
+  @media (min-width: 768px) {
+    .history-item ul {
+      gap: 10px;
+      flex-wrap: nowrap;
+    }
+  }
+  
+  .history-item ul li {
+    list-style: none;
+  }
+  
+  /* 메뉴 */
+  .menu {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 8px;
+  }
+  
+  .menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 98;
+  }
+  
   .menu-view-true {
     display: block;
     position: absolute;
@@ -63,46 +169,55 @@
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    min-width: 120px;
-    width: clamp(100px, 20vw, 120px);
+    min-width: 100px;
+    width: 120px;
   }
   
-  /* 모바일 대응 (768px 이하) */
-  @media (max-width: 768px) {
-    .history-view {
-      max-height: 300px;
-    }
-    
-    .history-item {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 8px;
-      height: auto;
-      min-height: auto;
-    }
-    
-    .history-item .history-label {
-      min-width: auto;
-      width: 100%;
-      text-align: center;
-    }
-    
-    .history-item ul {
-      width: 100%;
-      justify-content: center;
-    }
+  .menu-view-false {
+    display: none;
   }
   
-  /* 작은 모바일 (480px 이하) */
-  @media (max-width: 480px) {
-    .lotto-ball-default {
-      width: 40px;
-      height: 40px;
-      font-size: 14px;
-      margin: 3px;
-    }
-    
-    .history-item {
-      padding: 8px;
-    }
+  .menu-item {
+    margin: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+  }
+  
+  .menu-item:hover {
+    background-color: #fff8ff;
+    transform: scale(1.05);
+  }
+  
+  .menu-btn {
+    border: none;
+    background: none;
+    padding: 4px;
+    cursor: pointer;
+  }
+  
+  .menu-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
+  
+  /* 스크롤바 스타일 */
+  .history-view::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .history-view::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+  
+  .history-view::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+  }
+  
+  .history-view::-webkit-scrollbar-thumb:hover {
+    background: #555;
   }

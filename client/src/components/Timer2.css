@@ -1,10 +1,16 @@
 .timer {
-  font-size: clamp(2rem, 8vw, 3rem);
+  font-size: 2.5rem;
   font-weight: 700;
   color: #333;
   letter-spacing: -2px;
   margin: 0;
   line-height: 1;
+}
+
+@media (min-width: 768px) {
+  .timer {
+    font-size: 3rem;
+  }
 }
 
 .timer span {

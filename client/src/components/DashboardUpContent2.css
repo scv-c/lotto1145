@@ -1,67 +1,146 @@
+/* 상단 콘텐츠 카드 */
 .up-content {
   width: 100%;
-  max-width: 600px; /* 최대 너비 제한 */
-  height: auto; /* 고정 높이 제거 */
-  min-height: 350px;
-  margin: 0 auto; /* 중앙 정렬 */
+  max-width: 100%;
+  min-height: 300px;
+  margin: 0 auto 20px;
   background: white;
-  border: 1px solid black;
-  border-radius: 30px;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 20px 10px;
   box-sizing: border-box;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .up-content {
+    max-width: 600px;
+    min-height: 400px;
+    border-radius: 30px;
+    padding: 20px;
+  }
+}
+
+/* 네비게이션 버튼 */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border: 2px solid #e0e0e0;
+  border-radius: 50%;
+  background: white;
+  color: #888;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  user-select: none;
+  z-index: 10;
+}
+
+@media (min-width: 768px) {
+  .nav-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+}
+
+.nav-btn:hover {
+  border-color: #333;
+  color: #333;
+  background: #f9f9f9;
+}
+
+.nav-left {
+  left: 10px;
+}
+
+.nav-right {
+  right: 10px;
+}
+
+@media (min-width: 768px) {
+  .nav-left {
+    left: 20px;
+  }
+  .nav-right {
+    right: 20px;
+  }
+}
+
+/* 레이어 */
+.top-layer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }
 
 .center-layer {
-  min-height: 140px;
-  padding: clamp(20px, 5vw, 40px) 0 0 0;
+  min-height: 120px;
+  padding: 30px 10px 0;
   text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .center-layer {
+    min-height: 140px;
+    padding: 40px 0 0;
+  }
 }
 
 .center-layer .seq {
-  font-size: clamp(1.2rem, 4vw, 1.4rem);
+  font-size: 1.3rem;
+  margin: 10px 0;
 }
 
+@media (min-width: 768px) {
+  .center-layer .seq {
+    font-size: 1.4rem;
+  }
+}
+
+/* 상태 배지 */
 .status-badge {
-  padding: clamp(4px, 1.5vw, 6px) clamp(8px, 2vw, 12px);
-  font-size: clamp(0.75rem, 2vw, 0.85rem);
+  display: inline-block;
+  padding: 6px 12px;
+  background-color: #e3f2fd;
+  color: #1565c0;
   border-radius: 20px;
-  margin-bottom: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .status-badge {
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+  }
 }
 
 .message {
-  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  color: #666;
   margin-top: 10px;
+  font-size: 0.95rem;
 }
 
-/* 네비게이션 버튼 모바일에서 숨기기 (선택사항) */
-@media (max-width: 768px) {
-  .nav-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 16px;
-  }
-  
-  .nav-left {
-    left: 10px;
-  }
-  
-  .nav-right {
-    right: 10px;
-  }
-  
-  .up-content {
-    border-radius: 20px;
-    min-height: 300px;
-  }
-}
-
-@media (max-width: 480px) {
-  .nav-btn {
-    display: none; /* 아주 작은 화면에선 숨김 */
+@media (min-width: 768px) {
+  .message {
+    font-size: 1rem;
   }
 }
