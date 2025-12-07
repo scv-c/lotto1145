@@ -64,7 +64,7 @@ function App() {
 
       showToast(
         "default",
-        `<div>새로운 회차 최고득점 ${score}!</div><div>축하드립니다.</div><div>${userList.join("</div><div>")}</div>`
+        `🎉이번 최고득점 ${score}점🎉 ${userList.join("님, ")}님`
       );
     });
   }, []);
