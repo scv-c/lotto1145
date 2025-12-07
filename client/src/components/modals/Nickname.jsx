@@ -1,6 +1,6 @@
 // Ranking.jsx - 이렇게 수정
 import Modal from "./Modal.jsx";
-import "./Nickname2.css";
+import "./Nickname.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { updateUserNickname } from "../../services/api/user.js";

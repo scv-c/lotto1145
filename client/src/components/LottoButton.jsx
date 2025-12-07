@@ -1,4 +1,4 @@
-import "./LottoButton2.css";
+import "./LottoButton.css";
 import { useDispatch } from "react-redux";
 import {
   setHistoryLottoList,

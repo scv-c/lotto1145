@@ -1,4 +1,4 @@
-import "./Dashboard2.css";
+import "./Dashboard.css";
 import { useSelector } from "react-redux";
 import LottoCircle from "./LottoCricle";
 import DashboardUpContent from "./DashboardUpContent";

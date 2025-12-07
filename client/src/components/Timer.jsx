@@ -1,4 +1,4 @@
-import "./Timer2.css";
+import "./Timer.css";
 import React, { useState, useEffect } from "react";
 import dayjs from "dayjs";
 
