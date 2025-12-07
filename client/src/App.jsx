@@ -64,7 +64,7 @@ function App() {
 
       showToast(
         "default",
-        `새로운 회차 최고득점 ${score}! 축하드립니다. \n ${userList.join("\n")}`
+        `새로운 회차 최고득점 ${score}!<br />축하드립니다.<br />${userList.join("<br />")}`
       );
     });
   }, []);
