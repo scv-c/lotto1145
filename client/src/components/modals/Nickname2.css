@@ -1,0 +1,82 @@
+.input-wrapper {
+  position: relative;
+  margin: clamp(20px, 8vw, 40px) 0;
+  width: 100%;
+}
+
+/* 연필 아이콘 */
+.input-wrapper .input-icon {
+  position: absolute;
+  left: clamp(3px, 1.5vw, 5px);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: clamp(1rem, 3.5vw, 1.2rem);
+  color: #999;
+  pointer-events: none;
+}
+
+/* 입력창 스타일 */
+.input-wrapper .custom-input {
+  width: 100%;
+  padding: clamp(8px, 2.5vw, 10px) clamp(8px, 2.5vw, 10px) clamp(8px, 2.5vw, 10px) clamp(30px, 8vw, 35px);
+  font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+  border: none;
+  border-bottom: 2px solid #ddd;
+  outline: none;
+  text-align: center;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+.input-wrapper .custom-input:focus {
+  border-bottom-color: #3b82f6;
+}
+
+/* 툴팁 */
+.input-wrapper .tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ef4444;
+  color: white;
+  padding: clamp(4px, 1.5vw, 6px) clamp(8px, 2.5vw, 12px);
+  border-radius: clamp(4px, 1.5vw, 6px);
+  font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, transform 0.3s;
+  margin-bottom: clamp(8px, 2.5vw, 10px);
+  pointer-events: none;
+  /* 작은 화면에서 줄바꿈 허용 */
+  max-width: 90vw;
+}
+
+@media (max-width: 374px) {
+  .input-wrapper .tooltip {
+    white-space: normal;
+    text-align: center;
+  }
+}
+
+/* 툴팁 말풍선 꼬리 */
+.input-wrapper .tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #ef4444 transparent transparent transparent;
+}
+
+/* 툴팁 활성화 */
+.input-wrapper .tooltip.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-5px);
+}

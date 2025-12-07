@@ -1,0 +1,14 @@
+.timer {
+  /* 반응형 폰트 크기 */
+  font-size: clamp(2rem, 8vw, 3rem);
+  font-weight: 700;
+  color: #333;
+  letter-spacing: -2px;
+  margin: 0;
+  line-height: 1;
+}
+
+.timer span {
+  color: #929292;
+  font-weight: 300;
+}

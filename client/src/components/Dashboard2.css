@@ -1,0 +1,19 @@
+.dashboard {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dashboard .newLotto {
+  /* 고정 높이 제거 - 콘텐츠에 맞게 자동 조정 */
+  min-height: 60px;
+  padding: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .dashboard .newLotto {
+    min-height: 100px;
+  }
+}

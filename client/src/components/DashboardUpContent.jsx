@@ -1,4 +1,4 @@
-import "./DashboardUpContent.css";
+import "./DashboardUpContent2.css";
 import { useSelector } from "react-redux";
 import LottoCircle from "./LottoCricle";
 import Timer from "./Timer";

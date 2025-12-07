@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import "./App.css";
+import "./App2.css";
 import Dashboard from "./components/Dashboard";
 import Header from "./components/Header";
 import Footer from "./components/Footer";

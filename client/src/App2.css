@@ -1,11 +1,17 @@
-/* 전체 레이아웃 */
 #root {
-    max-width: 100%;
     width: 100%;
+    max-width: 100%;
     margin: 0 auto;
-    padding: 1rem;
+    padding: 0.75rem;
     text-align: center;
     box-sizing: border-box;
+    min-height: 100vh;
+  }
+  
+  @media (min-width: 375px) {
+    #root {
+      padding: 1rem;
+    }
   }
   
   @media (min-width: 768px) {
@@ -15,6 +21,9 @@
     }
   }
   
+  /* ==========================================
+     기본 리스트 스타일
+     ========================================== */
   ul {
     list-style-type: none;
     padding: 0;
@@ -22,20 +31,31 @@
   }
   
   .card {
-    padding: 1.5em;
+    padding: 1em;
   }
   
-  /* 로또 볼 - 모바일 우선 */
+  @media (min-width: 768px) {
+    .card {
+      padding: 2em;
+    }
+  }
+  
+  /* ==========================================
+     로또 볼 - 완전 반응형
+     ========================================== */
   .lotto-ball-default {
-    width: 45px;
-    height: 45px;
+    /* iPhone SE: 38px */
+    width: clamp(38px, 11vw, 56px);
+    height: clamp(38px, 11vw, 56px);
     border-radius: 50%;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    font-size: 16px;
-    margin: 4px;
+    /* 폰트 크기도 반응형 */
+    font-size: clamp(14px, 3.5vw, 18px);
+    /* 간격도 반응형 */
+    margin: clamp(3px, 1vw, 6px);
     box-shadow: 0 3px 0 rgba(0, 0, 0, 0.12),
       inset 0 -3px 6px rgba(255, 255, 255, 0.08);
     border: 2px solid rgba(0, 0, 0, 0.08);
@@ -43,30 +63,39 @@
     flex-shrink: 0;
   }
   
-  @media (min-width: 768px) {
-    .lotto-ball-default {
-      width: 56px;
-      height: 56px;
-      font-size: 18px;
-      margin: 6px;
-    }
+  /* 색상 구간 */
+  .lotto-ball-1 {
+    background: #f6c94b;
+    color: #111;
+  }
+  .lotto-ball-2 {
+    background: #4aa0ff;
+    color: #fff;
+  }
+  .lotto-ball-3 {
+    background: #ff6b6b;
+    color: #fff;
+  }
+  .lotto-ball-4 {
+    background: #bdbdbd;
+    color: #111;
+  }
+  .lotto-ball-5 {
+    background: #58d68d;
+    color: #fff;
   }
   
-  /* 색상 구간 */
-  .lotto-ball-1 { background: #f6c94b; color: #111; }
-  .lotto-ball-2 { background: #4aa0ff; color: #fff; }
-  .lotto-ball-3 { background: #ff6b6b; color: #fff; }
-  .lotto-ball-4 { background: #bdbdbd; color: #111; }
-  .lotto-ball-5 { background: #58d68d; color: #fff; }
-  
-  /* 히스토리 뷰 */
+  /* ==========================================
+     히스토리 뷰 - 완전 반응형
+     ========================================== */
   .history-view {
     width: 100%;
-    max-width: 720px;
-    max-height: 300px;
+    max-width: 100%;
+    /* 높이를 뷰포트 기준으로 조정 */
+    max-height: 40vh;
     overflow-y: auto;
-    margin: 20px auto 0;
-    padding: 0 8px;
+    margin: 1rem auto 0;
+    padding: 0 0.5rem;
     cursor: grab;
     box-sizing: border-box;
   }
@@ -77,55 +106,62 @@
   
   @media (min-width: 768px) {
     .history-view {
+      max-width: 720px;
       max-height: 380px;
+      padding: 0 8px;
     }
   }
   
-  /* 히스토리 아이템 */
+  /* 스크롤바 스타일 */
+  .history-view::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .history-view::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+  
+  .history-view::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+  }
+  
+  .history-view::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
+  /* ==========================================
+     히스토리 아이템 - 완전 반응형
+     ========================================== */
   .history-item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 8px;
-    margin-bottom: 12px;
+    gap: clamp(6px, 2vw, 14px);
+    padding: clamp(8px, 2vw, 10px) clamp(8px, 2vw, 16px);
+    margin-bottom: clamp(10px, 2.5vw, 14px);
     background: #ffffff;
-    border-radius: 12px;
+    border-radius: clamp(8px, 2vw, 12px);
     border: 1px dashed #bcd1ff;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    min-height: 60px;
+    min-height: auto;
     box-sizing: border-box;
-  }
-  
-  @media (min-width: 768px) {
-    .history-item {
-      gap: 14px;
-      padding: 10px 16px;
-      min-height: 64px;
-    }
   }
   
   /* 회차 레이블 */
   .history-item .history-label {
-    min-width: 40px;
-    font-size: 13px;
+    min-width: clamp(35px, 10vw, 50px);
+    font-size: clamp(12px, 3vw, 14px);
     font-weight: 700;
     color: #3454d1;
     text-align: left;
     flex-shrink: 0;
   }
   
-  @media (min-width: 768px) {
-    .history-item .history-label {
-      min-width: 50px;
-      font-size: 14px;
-    }
-  }
-  
-  /* 번호 리스트 */
+  /* 번호 리스트 - 2줄 허용 */
   .history-item ul {
     display: flex;
-    gap: 6px;
+    gap: clamp(4px, 1.5vw, 10px);
     flex-wrap: wrap;
     margin: 0;
     padding: 0;
@@ -133,22 +169,24 @@
     flex: 1;
   }
   
-  @media (min-width: 768px) {
-    .history-item ul {
-      gap: 10px;
-      flex-wrap: nowrap;
-    }
-  }
-  
   .history-item ul li {
     list-style: none;
   }
   
-  /* 메뉴 */
+  /* ==========================================
+     메뉴 - 반응형
+     ========================================== */
   .menu {
     display: flex;
     justify-content: flex-end;
-    padding: 0 8px;
+    padding: 0 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  @media (min-width: 768px) {
+    .menu {
+      padding: 0;
+    }
   }
   
   .menu-overlay {
@@ -170,7 +208,7 @@
     border-radius: 8px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     min-width: 100px;
-    width: 120px;
+    width: clamp(100px, 30vw, 120px);
   }
   
   .menu-view-false {
@@ -183,6 +221,7 @@
     cursor: pointer;
     padding: 8px;
     border-radius: 4px;
+    font-size: clamp(13px, 3.5vw, 15px);
   }
   
   .menu-item:hover {
@@ -198,26 +237,7 @@
   }
   
   .menu-icon {
-    width: 24px;
-    height: 24px;
+    width: clamp(20px, 6vw, 24px);
+    height: clamp(20px, 6vw, 24px);
     object-fit: contain;
-  }
-  
-  /* 스크롤바 스타일 */
-  .history-view::-webkit-scrollbar {
-    width: 6px;
-  }
-  
-  .history-view::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 3px;
-  }
-  
-  .history-view::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 3px;
-  }
-  
-  .history-view::-webkit-scrollbar-thumb:hover {
-    background: #555;
   }

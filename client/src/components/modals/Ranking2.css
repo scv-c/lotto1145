@@ -1,0 +1,134 @@
+.rank-table {
+  width: 100%;
+  border-collapse: collapse;
+  /* 높이를 뷰포트 기준으로 조정 */
+  max-height: clamp(250px, 40vh, 400px);
+  display: block;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+.rank-table::-webkit-scrollbar {
+  width: 6px;
+}
+
+.rank-table::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.rank-table::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.rank-table thead {
+  visibility: collapse;
+}
+
+.rank-table tbody {
+  display: table;
+  width: 100%;
+}
+
+.rank-table tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.rank-table td {
+  padding: clamp(12px, 3vw, 16px) clamp(8px, 2vw, 12px);
+  text-align: center;
+  font-size: clamp(13px, 3.5vw, 15px);
+}
+
+.rank-table td:nth-child(1) {
+  width: 15%;
+}
+
+.rank-table td:nth-child(2) {
+  width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rank-table td:nth-child(3) {
+  width: 15%;
+}
+
+.rank-table td span {
+  display: block;
+  font-weight: 500;
+}
+
+/* Clean White Style */
+.style-clean {
+  background: white;
+}
+
+.style-clean td {
+  border-bottom: 1px solid #f0f0f0;
+  color: #333;
+}
+
+.style-clean tr:last-child td {
+  border-bottom: none;
+}
+
+.style-clean td:nth-child(1) span {
+  color: #666;
+  font-size: clamp(16px, 4.5vw, 18px);
+  font-weight: 600;
+}
+
+.style-clean td:nth-child(3) span {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* 내 순위 표시 */
+.rank-me {
+  display: flex;
+  background-color: rgb(255, 244, 230);
+  border-radius: clamp(6px, 2vw, 8px);
+  margin-top: clamp(8px, 2vw, 12px);
+  overflow: hidden;
+}
+
+.style-clean .rank-mine {
+  background-color: rgb(255, 244, 230);
+}
+
+.rank-me div {
+  padding: clamp(12px, 3vw, 16px) clamp(8px, 2vw, 12px);
+  text-align: center;
+  font-size: clamp(13px, 3.5vw, 15px);
+}
+
+.rank-me div:nth-child(1) {
+  width: 15%;
+}
+
+.rank-me div:nth-child(2) {
+  width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rank-me div:nth-child(3) {
+  width: 15%;
+}
+
+.rank-me div:nth-child(1) span {
+  color: #666;
+  font-size: clamp(16px, 4.5vw, 18px);
+  font-weight: 600;
+}
+
+.rank-me div:nth-child(3) span {
+  color: #2563eb;
+  font-weight: 600;
+}

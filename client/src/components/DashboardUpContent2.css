@@ -1,0 +1,89 @@
+.up-content {
+  width: 100%;
+  /* 고정 높이를 최소 높이로 변경 */
+  min-height: clamp(300px, 50vh, 400px);
+  background: white;
+  border: 1px solid black;
+  border-radius: clamp(15px, 5vw, 30px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: clamp(1rem, 3vw, 2rem);
+  box-sizing: border-box;
+}
+
+/* Navigation Buttons */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(32px, 10vw, 40px);
+  height: clamp(32px, 10vw, 40px);
+  border: 2px solid #e0e0e0;
+  border-radius: 50%;
+  background: white;
+  color: #888;
+  font-size: clamp(16px, 5vw, 20px);
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  user-select: none;
+  z-index: 10;
+}
+
+.nav-btn:hover {
+  border-color: #333;
+  color: #333;
+  background: #f9f9f9;
+}
+
+.nav-left {
+  left: clamp(10px, 3vw, 20px);
+}
+
+.nav-right {
+  right: clamp(10px, 3vw, 20px);
+}
+
+.top-layer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* Content Area */
+.center-layer {
+  min-height: clamp(100px, 20vh, 140px);
+  padding: clamp(20px, 5vw, 40px) 0 0 0;
+  text-align: center;
+  width: 100%;
+}
+
+.center-layer .seq {
+  font-size: clamp(1rem, 4vw, 1.4rem);
+  margin-bottom: 0.5rem;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: clamp(4px, 1.5vw, 6px) clamp(8px, 3vw, 12px);
+  background-color: #e3f2fd;
+  color: #1565c0;
+  border-radius: 20px;
+  font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+  font-weight: 600;
+  margin-bottom: clamp(10px, 3vw, 15px);
+}
+
+.message {
+  color: #666;
+  margin-top: 10px;
+  font-size: clamp(0.875rem, 3vw, 1rem);
+}

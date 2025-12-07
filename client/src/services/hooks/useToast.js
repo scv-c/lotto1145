@@ -24,9 +24,9 @@ const useToast = () => {
         toast.error(message, defaultOptions);
         break;
       case "default":
-        toast(message, defaultOptions);
+        toast(message, { ...defaultOptions, autoClose: 3000 });
         break;
-      case "info":        
+      case "info":
       default:
         toast.info(message, defaultOptions);
         break;

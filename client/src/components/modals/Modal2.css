@@ -1,0 +1,124 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 40;
+}
+
+.modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* 모바일에서 여백 확보 */
+  padding: clamp(0.5rem, 3vw, 1rem);
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: clamp(6px, 2vw, 8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  /* 모바일에서 전체 너비 사용 */
+  max-width: min(500px, 100%);
+  width: 100%;
+  animation: modalFadeIn 0.2s ease-out;
+  /* 모바일에서 최대 높이 제한 */
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(16px, 4vw, 24px);
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: clamp(16px, 4vw, 20px);
+  font-weight: bold;
+  color: #1f2937;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: clamp(24px, 7vw, 32px);
+  color: #9ca3af;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: clamp(24px, 7vw, 32px);
+  height: clamp(24px, 7vw, 32px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+
+.modal-close-btn:hover {
+  color: #4b5563;
+}
+
+.modal-body {
+  padding: clamp(16px, 4vw, 24px);
+  color: #4b5563;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: clamp(8px, 2vw, 12px);
+  padding: clamp(16px, 4vw, 24px);
+  border-top: 1px solid #e5e7eb;
+}
+
+.modal-btn {
+  padding: clamp(8px, 2vw, 10px) clamp(12px, 3vw, 16px);
+  border-radius: clamp(4px, 1.5vw, 6px);
+  border: none;
+  font-size: clamp(13px, 3.5vw, 14px);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.modal-btn-cancel {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.modal-btn-cancel:hover {
+  background-color: #d1d5db;
+}
+
+.modal-btn-confirm {
+  background-color: #2563eb;
+  color: white;
+}
+
+.modal-btn-confirm:hover {
+  background-color: #1d4ed8;
+}

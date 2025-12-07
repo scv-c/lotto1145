@@ -56,7 +56,7 @@ export default function Footer() {
     const { No, Seq, UUID, AnsCount, ...lottoList } = e;
     return (
       <div className="history-item" key={No}>
-        <span>{Seq}</span>
+        <span className="history-label">{Seq}</span>
         <LottoCircle lottoList={lottoList} />
       </div>
     );

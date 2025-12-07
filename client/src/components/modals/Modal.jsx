@@ -1,5 +1,5 @@
 import React from "react";
-import "./Modal.css";
+import "./Modal2.css";
 
 //onOkPost 혹은 onOkGet은 내부에 onClose()동작을 플로우상 구현해놓아야 함.
 function Modal({ isOpen, onClose, onOkPost, onOkGet, title, children }) {
