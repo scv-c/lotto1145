@@ -18,6 +18,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(requestLogger);
+app.use(
+  compression({
+    level: 3,
+  })
+);
 
 // 라우트
 app.get("/api/health", (req, res) => {
@@ -32,11 +37,6 @@ app.get("/api/health", (req, res) => {
 app.use("/api/users", userRoutes);
 app.use("/api/user-lotto", userLottoRoutes);
 app.use("/api/daily-lotto", dailyLottoRoutes);
-app.use(
-  compression({
-    level: 3,
-  })
-);
 
 // 폴더 구조가 /github/lotto1145_back/app.js 라면, ../lotto1145_front/dist 로 가야 합니다.
 const __filename = fileURLToPath(import.meta.url);
