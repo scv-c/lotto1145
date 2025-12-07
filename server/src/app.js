@@ -35,8 +35,8 @@ app.use("/api/daily-lotto", dailyLottoRoutes);
 // 폴더 구조가 /github/lotto1145_back/app.js 라면, ../lotto1145_front/dist 로 가야 합니다.
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-const frontendDistPath = path.join(__dirname, "../client/dist");
+console.log("zzz", __filename, "zz", __dirname);
+const frontendDistPath = path.join(__dirname, "../../client/dist");
 
 app.use(express.static(frontendDistPath));
 
