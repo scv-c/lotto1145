@@ -10,7 +10,7 @@
     "url": "git+https://github.com/scv-c/lotto1145.git"
   },
   "scripts": {
-    "start": "node server/app.js",
+    "start": "node server/server.js",
     "install-all": "cd client && npm install && cd ../server && npm install",
     "build": "cd client && npm run build"
   },
