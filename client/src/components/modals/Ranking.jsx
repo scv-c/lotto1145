@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import Modal from "./Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserListSlice } from "../../services/store/userListSlice.js";
-import "./Ranking.css";
+import "./Ranking2.css";
 
 export default function Ranking({ onClose }) {
   const userUUID = useSelector((state) => state.user.UUID);

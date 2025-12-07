@@ -1,0 +1,32 @@
+.rank-table {
+  width: 100%;
+  border-collapse: collapse;
+  max-height: min(400px, 50vh); /* 화면 높이 고려 */
+  display: block;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.rank-table td {
+  padding: clamp(12px, 3vw, 16px) clamp(8px, 2vw, 12px);
+  text-align: center;
+}
+
+.rank-table td:nth-child(1) span {
+  font-size: clamp(16px, 4vw, 18px);
+}
+
+.rank-me div {
+  padding: clamp(12px, 3vw, 16px) clamp(8px, 2vw, 12px);
+}
+
+@media (max-width: 480px) {
+  .rank-table {
+    font-size: 0.9rem;
+  }
+  
+  .rank-table td:nth-child(2) {
+    width: 70%; /* 이름 영역 줄임 */
+  }
+}

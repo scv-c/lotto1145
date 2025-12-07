@@ -1,0 +1,108 @@
+#root {
+    max-width: min(1280px, 95vw); /* 화면의 95%를 넘지 않도록 */
+    margin: 0 auto;
+    padding: clamp(1rem, 3vw, 2rem); /* 반응형 패딩 */
+    text-align: center;
+  }
+  
+  /* 로또 볼 크기 반응형 */
+  .lotto-ball-default {
+    width: clamp(40px, 10vw, 56px); /* 최소 40px, 최대 56px */
+    height: clamp(40px, 10vw, 56px);
+    font-size: clamp(14px, 3vw, 18px);
+    margin: clamp(3px, 1vw, 6px);
+    /* 나머지는 동일 */
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.12),
+      inset 0 -3px 6px rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(0, 0, 0, 0.08);
+    user-select: none;
+  }
+  
+  /* 히스토리 영역 반응형 */
+  .history-view {
+    width: min(720px, 100%); /* 최대 720px이지만 작은 화면에선 100% */
+    max-height: 380px;
+    overflow-y: auto;
+    margin-top: 20px;
+    padding: 0 8px;
+    cursor: grab;
+  }
+  
+  .history-item {
+    display: flex;
+    align-items: center;
+    gap: clamp(8px, 2vw, 14px);
+    padding: clamp(8px, 2vw, 10px) clamp(10px, 2vw, 16px);
+    margin-bottom: 14px;
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px dashed #bcd1ff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    min-height: 64px;
+  }
+  
+  .history-item ul {
+    display: flex;
+    gap: clamp(6px, 1.5vw, 10px);
+    flex-wrap: wrap; /* 작은 화면에서 줄바꿈 허용 */
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* 메뉴 반응형 */
+  .menu-view-true {
+    display: block;
+    position: absolute;
+    z-index: 99;
+    transform: translate(-30px);
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    min-width: 120px;
+    width: clamp(100px, 20vw, 120px);
+  }
+  
+  /* 모바일 대응 (768px 이하) */
+  @media (max-width: 768px) {
+    .history-view {
+      max-height: 300px;
+    }
+    
+    .history-item {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      height: auto;
+      min-height: auto;
+    }
+    
+    .history-item .history-label {
+      min-width: auto;
+      width: 100%;
+      text-align: center;
+    }
+    
+    .history-item ul {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+  
+  /* 작은 모바일 (480px 이하) */
+  @media (max-width: 480px) {
+    .lotto-ball-default {
+      width: 40px;
+      height: 40px;
+      font-size: 14px;
+      margin: 3px;
+    }
+    
+    .history-item {
+      padding: 8px;
+    }
+  }
