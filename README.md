@@ -446,8 +446,8 @@ GET /api/user-lotto/user/mylist   # 내 로또 히스토리 조회
 
 ## 👨‍💻 개발 정보
 
-**GitHub**: [scv-c/lotto1145_front](https://github.com/scv-c/lotto1145_front)  
-**Live Demo**: [lotto1145-front.vercel.app](https://lotto1145-front.vercel.app)
+**GitHub**: [scv-c/lotto1145_front](https://github.com/scv-c/lotto1145)  
+**Live Demo**: [lotto1145-front.vercel.app](https://lotto1145-production.up.railway.app/)
 **ICON, 이미지 출처** : flacticon, gemini 생성
 
 ---
